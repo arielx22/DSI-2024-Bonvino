@@ -13,7 +13,13 @@ namespace Bonvino.Clases
         public string historia { get; set; }
         public List<int> coordenadasUbicacion { get; set;}
         public string descripcion { get; set; }
-        public DateTime periodoActualizacion { get; set; }
+        public TimeSpan periodoActualizacion { get; set; }
         public DateTime fechaUltimaActualizacion { get; set; }
+
+        public bool esActualizable(DateTime fechaActual)
+        {
+            int diasDelPeriodo = periodoActualizacion.Days;
+            return fechaActual.Day <= diasDelPeriodo;
+        }
     }
 }
