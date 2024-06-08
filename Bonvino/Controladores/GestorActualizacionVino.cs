@@ -1,4 +1,5 @@
-﻿using Bonvino.Clases;
+﻿using Bonvino.Boundarys;
+using Bonvino.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Bonvino.Controladores
     {
         private List<Bodega> bodegas;
         private Bodega bodegaElegida;
+        private List<Vino> infoVinosImportados;
 
         public GestorActualizacionVino() {
             bodegas = new List<Bodega>();
@@ -37,9 +39,28 @@ namespace Bonvino.Controladores
         public List<Vino> seleccionBodega(Bodega bodegaElegida)
         {
             this.bodegaElegida = bodegaElegida;
-            //Falta Completar
-            var Vinos = new List<Vino>();
-            return Vinos;
+            /*Falta Completar, devuelve novedeasdes de información 
+             * de vinos y no objeto*/
+            buscarActualizaciones();
+            buscarVinosAActualizar(infoVinosImportados);
+            return infoVinosImportados;
         }
+        public void buscarActualizaciones()
+        {
+            //falta completar tema de la API
+            //Verificar bien el tema de la API y Boundary
+            var IAPIBodega = new InterfazAPIBodega();
+            infoVinosImportados = IAPIBodega.getNovedades();   
+        }
+        public void buscarVinosAActualizar(List<Vino> infoVinosImportados)
+        {
+            var Vinos = new List<Vino>();
+            foreach (var vino in infoVinosImportados)
+            {
+
+            }
+        }
+
+
     }
 }
