@@ -8,7 +8,7 @@ namespace Bonvino.Clases
 {
     public class Bodega
     {
-        public Bodega() {}
+        public Bodega() { }
         public string nombre {  get; set; }
         public string historia { get; set; }
         public List<int> coordenadasUbicacion { get; set;}
@@ -20,6 +20,17 @@ namespace Bonvino.Clases
         {
             int diasDelPeriodo = periodoActualizacion.Days;
             return fechaActual.Day <= diasDelPeriodo;
+        }
+        public Vino esTuVino(Vino vinoImportado, List<Vino> vinos)
+        {
+            foreach (Vino vino in vinos)
+            {
+                if (vino.sosEsteVino(vinoImportado) == null) {
+                    return null;
+                }
+                return vino.sosEsteVino(vinoImportado);
+            }
+            return null;
         }
     }
 }

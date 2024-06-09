@@ -50,15 +50,29 @@ namespace Bonvino.Controladores
             //falta completar tema de la API
             //Verificar bien el tema de la API y Boundary
             var IAPIBodega = new InterfazAPIBodega();
-            infoVinosImportados = IAPIBodega.getNovedades();   
+            infoVinosImportados = IAPIBodega.getNovedades();
+            buscarVinosAActualizar(infoVinosImportados);
         }
         public void buscarVinosAActualizar(List<Vino> infoVinosImportados)
         {
-            var Vinos = new List<Vino>();
+            var VinosActualizar = new List<Vino>();
+            var vinosCrear = new List<Vino>();
+            var VinosBD = new List<Vino>();
             foreach (var vino in infoVinosImportados)
             {
-
+                var vinoBuscado = bodegaElegida.esTuVino(vino, VinosBD);
+                if (vinoBuscado == null)
+                {
+                    vinosCrear.Add(vinoBuscado);
+                }
+                else {
+                    VinosActualizar.Add(vinoBuscado);
+                }
             }
+        }
+        public void setOrNewVinos()
+        {
+
         }
 
 

@@ -19,5 +19,10 @@ namespace Bonvino.Clases
         public Meridaje meridaje { get; set; }
         public Bodega bodega { get; set; }
 
+        public Vino sosEsteVino(Vino vinoImportado)
+        {
+            if(this.nombre == vinoImportado.nombre) return this;
+            return null;
+        }
     }
 }

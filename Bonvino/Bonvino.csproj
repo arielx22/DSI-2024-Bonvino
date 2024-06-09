@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boundarys\InterfazAPIBodega.cs" />
     <Compile Include="Clases\Bodega.cs" />
     <Compile Include="Clases\Enofilo.cs" />
     <Compile Include="Clases\Meridaje.cs" />
@@ -55,15 +56,15 @@
     <Compile Include="Clases\Varietal.cs" />
     <Compile Include="Clases\Vino.cs" />
     <Compile Include="Controladores\GestorActualizacionVino.cs" />
-    <Compile Include="Pantallas\PantallaAtualizacionVino.cs">
+    <Compile Include="Boundarys\PantallaAtualizacionVino.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Pantallas\PantallaAtualizacionVino.Designer.cs">
+    <Compile Include="Boundarys\PantallaAtualizacionVino.Designer.cs">
       <DependentUpon>PantallaAtualizacionVino.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Pantallas\PantallaAtualizacionVino.resx">
+    <EmbeddedResource Include="Boundarys\PantallaAtualizacionVino.resx">
       <DependentUpon>PantallaAtualizacionVino.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
