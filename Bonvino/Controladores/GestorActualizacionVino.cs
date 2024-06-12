@@ -36,14 +36,15 @@ namespace Bonvino.Controladores
             }
             return bodegas;
         }
-        public List<Vino> seleccionBodega(Bodega bodegaElegida)
+        public void seleccionBodega(Bodega bodegaElegida)
         {
             this.bodegaElegida = bodegaElegida;
             /*Falta Completar, devuelve novedeasdes de información 
              * de vinos y no objeto*/
             buscarActualizaciones();
-            buscarVinosAActualizar(infoVinosImportados);
-            return infoVinosImportados;
+            var VinosActualizar = buscarVinosAActualizar();
+            setOrNewVinos(VinosActualizar);
+
         }
         public void buscarActualizaciones()
         {
@@ -51,30 +52,43 @@ namespace Bonvino.Controladores
             //Verificar bien el tema de la API y Boundary
             var IAPIBodega = new InterfazAPIBodega();
             infoVinosImportados = IAPIBodega.getNovedades();
-            buscarVinosAActualizar(infoVinosImportados);
         }
-        public void buscarVinosAActualizar(List<Vino> infoVinosImportados)
+        public List<Vino> buscarVinosAActualizar()
         {
-            var VinosActualizar = new List<Vino>();
-            var vinosCrear = new List<Vino>();
-            var VinosBD = new List<Vino>();
+            var vinosActualizar = new List<Vino>();
+            var vinosBD = new List<Vino>();
             foreach (var vino in infoVinosImportados)
             {
-                var vinoBuscado = bodegaElegida.esTuVino(vino, VinosBD);
-                if (vinoBuscado == null)
+                var vinoBuscado = bodegaElegida.esTuVino(vino, vinosBD);
+                if (vinoBuscado != null)
                 {
-                    vinosCrear.Add(vinoBuscado);
+                    vinosActualizar.Add(vinoBuscado);
                 }
-                else {
-                    VinosActualizar.Add(vinoBuscado);
+            }
+            return vinosActualizar;
+        }
+        public void setOrNewVinos(List<Vino> vinosActualizar)
+        {
+            foreach (var vino in infoVinosImportados)
+            {
+                if (vinosActualizar.Contains(vino))
+                {
+                    actualizarVinoExistente(vino);
+                }
+                else
+                {
+                    crearVino(vino);
                 }
             }
         }
-        public void setOrNewVinos()
+        public void actualizarVinoExistente(Vino vino) 
         {
 
         }
-
-
+        public void crearVino(Vino vino) { }
+        public void buscarMeridaje() { }
+        public void buscarTipoUva(){}
+        public void buscarSeguidoresBodega(){}
+        public void finCU() { }
     }
 }

@@ -32,5 +32,9 @@ namespace Bonvino.Clases
             }
             return null;
         }
+        public void setDatoVino(Vino vino)
+        {
+            
+        }
     }
 }
