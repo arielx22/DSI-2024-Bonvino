@@ -19,7 +19,7 @@ namespace Bonvino
         private Bodega bodegaElegida;
         public PantallaAtualizacionVino()
         {
-            gestor = new GestorActualizacionVino();
+            gestor = new GestorActualizacionVino(this);
             bodegaElegida = new Bodega();
             InitializeComponent();
         }
@@ -34,14 +34,13 @@ namespace Bonvino
         }
         public void habilitarPantalla()
         {
-            bodegas = gestor.opImportarActualizacionVino();
-            mostrarBodegasActualizables();
+            gestor.opImportarActualizacionVino(); 
         }
-        public void mostrarBodegasActualizables()
+        public void mostrarBodegasActualizables(List<Bodega> bodegas)
         {
             dgvBodegas.Rows.Clear();
-
-            foreach (var bodega in bodegas)
+            this.bodegas = bodegas;
+            foreach (var bodega in this.bodegas)
             {
                 /*
                 var fila = new string[] {
@@ -52,13 +51,23 @@ namespace Bonvino
             }
 
         }
-
+        //falta hacer un boton para asociar añ metodo seleccionBodega
         private void seleccionBodega(object sender, EventArgs e)
         {
             bodegaElegida.nombre = dgvBodegas.SelectedRows[0].Cells["Nombre"].Value.ToString();
-            var vinos = gestor.seleccionBodega(bodegaElegida);
+            gestor.seleccionBodega(bodegaElegida);
         }
+        public void mostrarResumenVinosImportados()
+        {
+            //completar
+        }
+
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvBodegas_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

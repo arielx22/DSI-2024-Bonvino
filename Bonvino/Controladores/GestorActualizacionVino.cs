@@ -12,16 +12,22 @@ namespace Bonvino.Controladores
     {
         private List<Bodega> bodegas;
         private Bodega bodegaElegida;
-        private List<Vino> infoVinosImportados;
+        private List<VinoActualizacion> infoVinosImportados;
+        private PantallaAtualizacionVino pantallaAtualizacionVino;
+        private List<Enofilo> enofilosSeguidoresDeBodega;
 
-        public GestorActualizacionVino() {
+        public GestorActualizacionVino(PantallaAtualizacionVino pantallaAtualizacion) {
             bodegas = new List<Bodega>();
+            enofilosSeguidoresDeBodega = new List<Enofilo>();
+            this.pantallaAtualizacionVino = pantallaAtualizacion;
         }
-        public List<Bodega> opImportarActualizacionVino() { 
-            return buscarBodegaActualizacionDisponible();
+        public void opImportarActualizacionVino() {
+            buscarBodegaActualizacionDisponible();
+            pantallaAtualizacionVino.mostrarBodegasActualizables(bodegas);
         }
-        public List<Bodega> buscarBodegaActualizacionDisponible()
+        public void buscarBodegaActualizacionDisponible()
         {
+            //allBodegas hay que hardcodear, represensta las bodegas de la BD
             var allBodegas = new List<Bodega>();
             DateTime fechaActual = DateTime.Now;
             int i = 0;
@@ -34,61 +40,111 @@ namespace Bonvino.Controladores
                     i++;
                 }
             }
-            return bodegas;
         }
         public void seleccionBodega(Bodega bodegaElegida)
         {
             this.bodegaElegida = bodegaElegida;
-            /*Falta Completar, devuelve novedeasdes de información 
-             * de vinos y no objeto*/
             buscarActualizaciones();
-            var VinosActualizar = buscarVinosAActualizar();
-            setOrNewVinos(VinosActualizar);
-
+            var vinosActualizar = buscarVinosAActualizar();
+            setOrNewVinos(vinosActualizar);
+            pantallaAtualizacionVino.mostrarResumenVinosImportados();
+            buscarSeguidoresBodega();
+            notificar();
+            finCU();
         }
         public void buscarActualizaciones()
         {
-            //falta completar tema de la API
-            //Verificar bien el tema de la API y Boundary
             var IAPIBodega = new InterfazAPIBodega();
-            infoVinosImportados = IAPIBodega.getNovedades();
+            infoVinosImportados = IAPIBodega.getNovedades(bodegaElegida);
         }
-        public List<Vino> buscarVinosAActualizar()
+        public List<VinoActualizacion> buscarVinosAActualizar()
         {
-            var vinosActualizar = new List<Vino>();
-            var vinosBD = new List<Vino>();
+            var vinosActualizar = new List<VinoActualizacion>();
+            var vinosBD = new List<Vino>();;
             foreach (var vino in infoVinosImportados)
             {
                 var vinoBuscado = bodegaElegida.esTuVino(vino, vinosBD);
                 if (vinoBuscado != null)
                 {
-                    vinosActualizar.Add(vinoBuscado);
+                    vinosActualizar.Add(vino);
                 }
             }
             return vinosActualizar;
         }
-        public void setOrNewVinos(List<Vino> vinosActualizar)
+        public void setOrNewVinos(List<VinoActualizacion> vinosActualizar)
         {
-            foreach (var vino in infoVinosImportados)
+            var vinosBD = new List<Vino>();
+            foreach (var infoVinoImportado in infoVinosImportados)
             {
-                if (vinosActualizar.Contains(vino))
+
+                if (vinosActualizar.Contains(infoVinoImportado))
                 {
-                    actualizarVinoExistente(vino);
+                    actualizarVinoExistente(infoVinoImportado, vinosBD);
                 }
                 else
                 {
-                    crearVino(vino);
+                    crearVino(infoVinoImportado);
                 }
             }
+            bodegaElegida.fechaUltimaActualizacion = DateTime.Now;
         }
-        public void actualizarVinoExistente(Vino vino) 
+        public void actualizarVinoExistente(VinoActualizacion vinoActualizacion, List<Vino> vinosBD) 
         {
+            bodegaElegida.setDatosVino(vinoActualizacion, vinosBD);
+        }
+        public void crearVino(VinoActualizacion vinoCrear) {
+            var meridaje = buscarMeridaje(vinoCrear.meridaje);
+            var tipoUva = buscarTipoUva(vinoCrear.tipoUva);
+            Vino vino = new Vino(meridaje,tipoUva,vinoCrear.nombre,
+                vinoCrear.añada,vinoCrear.notaDeCataBodega,
+                vinoCrear.precioARS,vinoCrear.imagenEtiqueta,
+                vinoCrear.varietal.descripcion,vinoCrear.varietal.porcentajeComposicion);
+        }
+        public Meridaje buscarMeridaje(string nombre) {
+            var meridajesBD = new List<Meridaje>();
+            foreach (var meridajeBD in meridajesBD) {
+                if (meridajeBD.sosMeridaje(nombre)) return meridajeBD;
+            }
+            return null;
+        }
+        public TipoUva buscarTipoUva(string nombre){
+            var tipoUvasBD = new List<TipoUva>();
+            foreach (var tipoUvaBD in tipoUvasBD)
+            {
+                if (tipoUvaBD.sosTipoUva(nombre)) return tipoUvaBD;
+            }
+            return null;
+        }
+        public void buscarSeguidoresBodega(){
+            //enolifilos de la BD
+            var enofilosBD = new List<Enofilo>();
+            int i = 0;
+            foreach (var enofilo in enofilosBD)
+            {
+                if (enofilo.seguisABodega(bodegaElegida)) {
+
+                    enofilosSeguidoresDeBodega[i] = enofilo;
+                    enofilosSeguidoresDeBodega[i].usuario.nombre = enofilo.usuario.nombre;
+                    i++;
+                }      
+            }
+        }
+        public void notificar()
+        {
+            var INotificacionPush = new InterfazNotificacionPush();
+            //falta completar el metodo notificarNovedadVinoBodega();
+            foreach (var enofilo in enofilosSeguidoresDeBodega)
+            {
+                INotificacionPush.notificarNovedadVinoBodega(enofilo);
+            }
 
         }
-        public void crearVino(Vino vino) { }
-        public void buscarMeridaje() { }
-        public void buscarTipoUva(){}
-        public void buscarSeguidoresBodega(){}
-        public void finCU() { }
+        public void finCU() 
+        {
+            //opcional:
+            //hacer un show diagog donde pregunte si cerrar la ventana
+            //si reponde que si se cierra la pantalla
+            pantallaAtualizacionVino.Dispose();
+        }
     }
 }

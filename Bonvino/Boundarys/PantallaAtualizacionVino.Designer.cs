@@ -66,6 +66,7 @@
             this.dgvBodegas.Name = "dgvBodegas";
             this.dgvBodegas.Size = new System.Drawing.Size(147, 150);
             this.dgvBodegas.TabIndex = 0;
+            this.dgvBodegas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBodegas_CellContentClick);
             // 
             // Nombre
             // 

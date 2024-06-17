@@ -11,5 +11,9 @@ namespace Bonvino.Clases
         public Meridaje() { }
         public string descripcion {  get; set; }
         public string nombre { get; set; }
+
+        public bool sosMeridaje(string nombre) {
+            return this.nombre == nombre;
+        }
     }
 }

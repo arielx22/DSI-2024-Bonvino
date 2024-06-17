@@ -9,32 +9,48 @@ namespace Bonvino.Clases
     public class Bodega
     {
         public Bodega() { }
-        public string nombre {  get; set; }
+        public string nombre { get; set; }
         public string historia { get; set; }
-        public List<int> coordenadasUbicacion { get; set;}
+        public List<int> coordenadasUbicacion { get; set; }
         public string descripcion { get; set; }
-        public TimeSpan periodoActualizacion { get; set; }
+        public int periodoActualizacion { get; set; }
         public DateTime fechaUltimaActualizacion { get; set; }
 
         public bool esActualizable(DateTime fechaActual)
         {
-            int diasDelPeriodo = periodoActualizacion.Days;
-            return fechaActual.Day <= diasDelPeriodo;
-        }
-        public Vino esTuVino(Vino vinoImportado, List<Vino> vinos)
-        {
-            foreach (Vino vino in vinos)
+            // Calcular la diferencia en meses entre la fecha actual y la última fecha de actualización
+            int mesesDesdeUltimaActualizacion = (fechaActual.Year - fechaUltimaActualizacion.Year) * 12 + fechaActual.Month - fechaUltimaActualizacion.Month;
+            // Verificar si han pasado al menos tantos meses como la periodicidad desde la última actualización
+            if (mesesDesdeUltimaActualizacion > periodoActualizacion)
             {
-                if (vino.sosEsteVino(vinoImportado) == null) {
+                return true;
+            }
+            return false;
+        }
+        public Vino esTuVino(VinoActualizacion vinoImportado, List<Vino> vinosBD)
+        {
+            foreach (Vino vino in vinosBD)
+            {
+                if (vino.sosEsteVino(vinoImportado) == null)
+                {
                     return null;
                 }
                 return vino.sosEsteVino(vinoImportado);
             }
             return null;
         }
-        public void setDatoVino(Vino vino)
+        public void setDatosVino(VinoActualizacion vinoActualizar, List<Vino> vinosBD)
         {
-            
+            foreach (Vino vino in vinosBD)
+            {
+               if (vino.sosVinoAActualizar(vinoActualizar.nombre,vinoActualizar.añada)) {
+                    vino.fechaActualizacion = DateTime.Now;
+                    vino.imagenEtiqueta = vinoActualizar.imagenEtiqueta;
+                    vino.precioARS = vinoActualizar.precioARS;
+                    vino.notaDeCataBodega = vinoActualizar.notaDeCataBodega;
+               }
+            }
+
         }
     }
 }

@@ -14,5 +14,9 @@ namespace Bonvino.Clases
         public string nombre { get; set; }
         public Usuario usuario { get; set; }
         public Siguiendo siguiendo { get; set; }
+        public bool seguisABodega(Bodega bodega)
+        {
+            return this.siguiendo.sosDeBodega(bodega);
+        }
     }
 }

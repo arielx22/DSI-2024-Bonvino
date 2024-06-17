@@ -37,5 +37,11 @@ namespace Bonvino.Clases
                 enofilo = value;
             }
         }
+        public bool sosDeBodega(Bodega bodega) {
+            if (this.bodega==null) {
+                return false;
+            }
+            return this.bodega == bodega;
+        }
     }
 }

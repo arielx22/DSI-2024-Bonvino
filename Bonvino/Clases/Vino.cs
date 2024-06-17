@@ -9,7 +9,18 @@ namespace Bonvino.Clases
     public class Vino
     {
         public Vino() { }
-        public string añada { get; set; }
+        public Vino(Meridaje meridaje,TipoUva tipoUva, string nombre, int añada, 
+            string notaDeCataBodega, float precioARS, byte[] imagenEtiqueta, string descripcion,
+            double porcentajeComposicion) {
+            this.meridaje = meridaje;
+            this.nombre = nombre;
+            this.añada = añada;
+            this.notaDeCataBodega = notaDeCataBodega;
+            this.precioARS = precioARS;
+            this.imagenEtiqueta = imagenEtiqueta;
+            crearVarietal(tipoUva, descripcion, porcentajeComposicion);
+        }
+        public int añada { get; set; }
         public DateTime fechaActualizacion { get; set; }
         public byte[] imagenEtiqueta { get; set; }
         public string nombre { get; set; }
@@ -18,11 +29,20 @@ namespace Bonvino.Clases
         public Varietal varietal { get; set; }
         public Meridaje meridaje { get; set; }
         public Bodega bodega { get; set; }
-
-        public Vino sosEsteVino(Vino vinoImportado)
+        public void crearVarietal(TipoUva tipoUva, string descripcion, double porcentajeComposicion)
         {
-            if(this.nombre == vinoImportado.nombre) return this;
+            this.varietal = new Varietal(tipoUva, descripcion, porcentajeComposicion);
+        }
+
+        public Vino sosEsteVino(VinoActualizacion vinoImportado)
+        {
+            if (this.nombre == vinoImportado.nombre && this.añada == vinoImportado.añada) return this;
             return null;
+        }
+        public bool sosVinoAActualizar(string nombre, int añada)
+        {
+            if (this.nombre == nombre && this.añada == añada) return true;
+            return false;
         }
     }
 }

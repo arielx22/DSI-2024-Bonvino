@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bonvino.Clases
 {
-    public class TipoUva
+    public class VarietalActualizacion
     {
-        public TipoUva() { }
+        public VarietalActualizacion() { }
         public string descripcion { get; set; }
-        public string nombre { get; set; }
-        public bool sosTipoUva(string nombre) { 
-            return this.nombre == nombre;
-        }
+        public double porcentajeComposicion { get; set; }
+        public TipoUva tipoUva { get; set; }
     }
 }
