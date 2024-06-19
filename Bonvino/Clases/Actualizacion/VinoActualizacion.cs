@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bonvino.Clases
+namespace Bonvino.Clases.Actualizacion
 {
     public class VinoActualizacion
     {
@@ -20,8 +20,7 @@ namespace Bonvino.Clases
         public string notaDeCataBodega { get; set; }
         public float precioARS { get; set; }
         public VarietalActualizacion varietal { get; set; }
-        public string tipoUva {  get; set; }
-        public string meridaje { get; set; }
-        public Bodega bodega { get; set; }
+        public string maridaje { get; set; }
+        public string bodega { get; set; }
     }
 }

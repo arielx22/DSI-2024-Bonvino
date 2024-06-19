@@ -1,4 +1,5 @@
 ﻿using Bonvino.Clases;
+using Bonvino.Clases.Actualizacion;
 using Bonvino.Controladores;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Bonvino
         }
         public void habilitarPantalla()
         {
-            gestor.opImportarActualizacionVino(); 
+            gestor.opImportarActualizacionVino();
         }
         public void mostrarBodegasActualizables(List<Bodega> bodegas)
         {
@@ -51,15 +52,29 @@ namespace Bonvino
             }
 
         }
-        //falta hacer un boton para asociar añ metodo seleccionBodega
         private void seleccionBodega(object sender, EventArgs e)
         {
-            bodegaElegida.nombre = dgvBodegas.SelectedRows[0].Cells["Nombre"].Value.ToString();
+            bodegaElegida.nombre = dgvBodegas.CurrentCell.Value.ToString();
             gestor.seleccionBodega(bodegaElegida);
         }
-        public void mostrarResumenVinosImportados()
+        public void mostrarResumenVinosImportados(List<VinoActualizacion> vinosResumen)
         {
             //completar
+            dgvResumenVinos.Rows.Clear();
+            foreach (var vino in vinosResumen)
+            {
+                var fila = new string[] {
+                    bodegaElegida.nombre,
+                    vino.nombre,
+                    vino.añada.ToString(),
+                    vino.precioARS.ToString(),
+                    vino.maridaje.ToString(),
+                    vino.varietal.porcentajeComposicion.ToString(),
+                    vino.varietal.tipoUva.nombre
+                };
+                dgvResumenVinos.Rows.Add(fila);
+            }
+
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -68,6 +83,16 @@ namespace Bonvino
         }
 
         private void dgvBodegas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

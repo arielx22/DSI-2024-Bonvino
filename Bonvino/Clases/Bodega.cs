@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bonvino.Clases.Actualizacion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,12 +32,11 @@ namespace Bonvino.Clases
         {
             foreach (Vino vino in vinosBD)
             {
-                if (vino.sosEsteVino(vinoImportado) == null)
+                if (vino.sosEsteVino(vinoImportado) != null)
                 {
-                    return null;
+                    return vino;
                 }
-                return vino.sosEsteVino(vinoImportado);
-            }
+            }   
             return null;
         }
         public void setDatosVino(VinoActualizacion vinoActualizar, List<Vino> vinosBD)

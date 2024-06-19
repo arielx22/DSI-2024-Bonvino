@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Bonvino.Clases
 {
-    public class Meridaje
+    public class Maridaje
     {
-        public Meridaje() { }
+        public Maridaje() { }
         public string descripcion {  get; set; }
         public string nombre { get; set; }
 
-        public bool sosMeridaje(string nombre) {
+        public bool sosMaridaje(string nombre) {
             return this.nombre == nombre;
         }
     }

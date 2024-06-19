@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bonvino.Clases.Actualizacion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,14 @@ namespace Bonvino.Clases
     public class Vino
     {
         public Vino() { }
-        public Vino(Meridaje meridaje,TipoUva tipoUva, string nombre, int añada, 
-            string notaDeCataBodega, float precioARS, byte[] imagenEtiqueta, string descripcion,
+        public Vino(Maridaje maridaje,TipoUva tipoUva, string nombre, int añada, 
+            string notaDeCataBodega, float precioARS, string descripcion,
             double porcentajeComposicion) {
-            this.meridaje = meridaje;
+            this.maridaje = maridaje;
             this.nombre = nombre;
             this.añada = añada;
             this.notaDeCataBodega = notaDeCataBodega;
             this.precioARS = precioARS;
-            this.imagenEtiqueta = imagenEtiqueta;
             crearVarietal(tipoUva, descripcion, porcentajeComposicion);
         }
         public int añada { get; set; }
@@ -27,7 +27,7 @@ namespace Bonvino.Clases
         public string notaDeCataBodega { get; set; }
         public float precioARS { get; set; }
         public Varietal varietal { get; set; }
-        public Meridaje meridaje { get; set; }
+        public Maridaje maridaje { get; set; }
         public Bodega bodega { get; set; }
         public void crearVarietal(TipoUva tipoUva, string descripcion, double porcentajeComposicion)
         {

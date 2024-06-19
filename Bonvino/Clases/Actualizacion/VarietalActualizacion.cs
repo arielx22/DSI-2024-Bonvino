@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bonvino.Clases
+namespace Bonvino.Clases.Actualizacion
 {
     public class VarietalActualizacion
     {
         public VarietalActualizacion() { }
         public string descripcion { get; set; }
         public double porcentajeComposicion { get; set; }
-        public TipoUva tipoUva { get; set; }
+        public TipoUvaActualizacion tipoUva { get; set; }
     }
 }

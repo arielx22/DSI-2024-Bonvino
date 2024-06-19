@@ -1,4 +1,5 @@
-﻿using Bonvino.Clases;
+﻿using Bonvino.Clases.Actualizacion;
+using Bonvino.Clases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,55 +16,118 @@ namespace Bonvino.Boundarys
         {
             List<VinoActualizacion> actualizaciones = new List<VinoActualizacion>();
 
-            if (bodegaElegida.nombre == "a")
+            if (bodegaElegida.nombre == "Bodega Catena Zapata")
             {
+
                 actualizaciones.Add(new VinoActualizacion
                 {
-                    nombre = "Vino Dulce Cosecha Tardía",
+                    nombre = "Catena Pinot Noir",
                     añada = 2020,
                     precioARS = 20000,
-                    notaDeCataBodega = "Aromas a frutas maduras y miel, con un toque de vainilla.",
+                    maridaje = "Vinos y Sabores",
+                    notaDeCataBodega = "Aromas seductores de cerezas frescas, " +
+                    "fresas maduras y delicadas notas florales",
+                    varietal = new VarietalActualizacion
+                    {
+                        porcentajeComposicion = 0.60,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Pinot Noir"
+                        }
+                    }
                 });
+
                 actualizaciones.Add(new VinoActualizacion
                 {
-                    nombre = "Vino Malbec Reserva",
+                    nombre = "Catena Malbec",
                     añada = 2015,
                     precioARS = 27000,
-                    notaDeCataBodega = "Notas de ciruela, mora y un ligero toque de roble.",
+                    maridaje = "Maridaje de Excelencia",
+                    notaDeCataBodega = "Notas de ciruela, mora y un ligero " +
+                    "toque de roble.",
+                    varietal = new VarietalActualizacion
+                    {
+                        porcentajeComposicion = 0.67,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Malbec"
+                        }
+                    }
                 });
+
                 actualizaciones.Add(new VinoActualizacion
                 {
-                    nombre = "Vino...",
+                    nombre = "Cantena Chardonnay",
                     añada = 2023,
                     precioARS = 12000,
-                    notaDeCataBodega = "Frutos rojos frescos y un matiz especiado.",
+                    maridaje = "Armonías en la Mesa",
+                    notaDeCataBodega = "Frutos frescos y un matiz especiado.",
+                    varietal = new VarietalActualizacion
+                    {
+                        porcentajeComposicion = 0.65,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Chardonnay"
+                        }
+                    }
                 });
             }
-            if (bodegaElegida.nombre=="b")
+            if (bodegaElegida.nombre== "Bodega Norton")
             {
                 actualizaciones.Add(new VinoActualizacion
                 {
-                    nombre = "Vino Cabernet Sauvignon",
+                    nombre = "Norton Cabernet Sauvignon",
                     añada = 2022,
                     precioARS = 20000,
-                    notaDeCataBodega = "Aromas intensos a grosellas y cedro, con taninos suaves y persistentes.",
+                    maridaje = "Maridaje de Excelencia",
+                    notaDeCataBodega = "Aromas intensos a grosellas y cedro, con " +
+                    "taninos suaves y persistentes.",
+                    varietal = new VarietalActualizacion
+                    {
+                        porcentajeComposicion = 0.70,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Cabernet Sauvignon"
+                        }
+                    }
                 });
+
                 actualizaciones.Add(new VinoActualizacion
                 {
-                    nombre = "Vino Garnacha",
+                    nombre = "Norton Garnacha",
                     añada = 2021,
                     precioARS = 8000,
-                    notaDeCataBodega = "Notas de frutos rojos maduros y especias, con un final suave y persistente.",
+                    maridaje = "Vinos y Sabores",
+                    notaDeCataBodega = "Notas de frutos rojos maduros y especias, con " +
+                    "un final suave y persistente toque de roble.",
+                    varietal = new VarietalActualizacion
+                    {
+                        porcentajeComposicion = 0.66,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Garnacha"
+                        }
+                    }
                 });
+
                 actualizaciones.Add(new VinoActualizacion
                 {
-                    nombre = "Vino Reserva Especial 2020",
+                    nombre = "Norton Reserva",
                     añada = 2020,
                     precioARS = 12000,
-                    notaDeCataBodega = "Notas de cereza, violeta y un toque de regaliz, con un final fresco y elegante.",
-                });
-            }
-            
+                    maridaje = "Armonías en la Mesa",
+                    notaDeCataBodega = "Notas de cereza, violeta y un toque de regaliz, " +
+                    "con un final fresco y elegante.",
+                    varietal = new VarietalActualizacion
+                    {
+                        porcentajeComposicion = 0.60,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Malbec"
+                        }
+                    }
+                });           
+            }      
             return actualizaciones;
         }
 
