@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Bonvino.Controladores
 {
@@ -14,20 +15,21 @@ namespace Bonvino.Controladores
         private List<Bodega> bodegas;
         private Bodega bodegaElegida;
         private List<VinoActualizacion> infoVinosImportados;
-        private PantallaAtualizacionVino pantallaAtualizacionVino;
         private List<Enofilo> enofilosSeguidoresDeBodega;
-
-        public GestorActualizacionVino(PantallaAtualizacionVino pantallaAtualizacion) {
+        
+        public GestorActualizacionVino() {
             bodegas = new List<Bodega>();
             enofilosSeguidoresDeBodega = new List<Enofilo>();
-            this.pantallaAtualizacionVino = pantallaAtualizacion;
         }
-        public void opImportarActualizacionVino() {
+        public void opImportarActualizacionVino(PantallaAtualizacionVino pantallaAtualizacionVino) {
             buscarBodegaActualizacionDisponible();
             pantallaAtualizacionVino.mostrarBodegasActualizables(bodegas);
         }
         public void buscarBodegaActualizacionDisponible()
         {
+            //Para que no se repitan las bodegas en la lista, 
+            //cuando se hace click en el boton importar.
+            bodegas.Clear();
             var bodegasBD = getBodegasSinBD();
             DateTime fechaActual = DateTime.Now;
             int i = 0;
@@ -37,70 +39,63 @@ namespace Bonvino.Controladores
                 {
                     bodegas.Add(bodega);
                     bodegas[i].nombre = bodega.nombre;
-                    i+=1;
+                    i++;
                 }
             }
         }
-        public void seleccionBodega(Bodega bodegaElegida)
+        public void seleccionBodega(Bodega bodegaElegida, PantallaAtualizacionVino pantallaAtualizacionVino)
         {
             this.bodegaElegida = bodegaElegida;
             buscarActualizaciones();
-            var vinosActualizar = buscarVinosAActualizar();
-            setOrNewVinos(vinosActualizar);
+            setOrNewVinos(pantallaAtualizacionVino);
             buscarSeguidoresBodega();
             notificar();
-            //finCU();
+            finCU();
         }
         public void buscarActualizaciones()
         {
             var IAPIBodega = new InterfazAPIBodega();
             infoVinosImportados = IAPIBodega.getNovedades(bodegaElegida);
         }
-        public List<VinoActualizacion> buscarVinosAActualizar()
-        {
-            var vinosActualizar = new List<VinoActualizacion>();
-            var vinosBD = getVinosSinBD();
-            foreach (var vino in infoVinosImportados)
-            {
-                var vinoBuscado = bodegaElegida.esTuVino(vino, vinosBD);
-                if (vinoBuscado != null)
-                {
-                    vinosActualizar.Add(vino);
-                }
-            }
-            return vinosActualizar;
-        }
-        public void setOrNewVinos(List<VinoActualizacion> vinosActualizar)
+        
+       
+        public void setOrNewVinos(PantallaAtualizacionVino pantallaAtualizacionVino)
         {
             var vinosBD = getVinosSinBD();
-            var vinosResumen = new List<VinoActualizacion>();
+            var vinosResumenTipoVino = new List<Vino>();
             foreach (var infoVinoImportado in infoVinosImportados)
             {
-                vinosResumen.Add(infoVinoImportado);
-                if (vinosActualizar.Contains(infoVinoImportado))
+                var vinoBuscado = determinarVinoAActualizar(infoVinoImportado, vinosBD);
+                if (vinoBuscado != null)
                 {
-                    actualizarVinoExistente(infoVinoImportado, vinosBD);
-
+                    actualizarVinoExistente(infoVinoImportado, vinoBuscado);
+                    vinosResumenTipoVino.Add(vinoBuscado);
                 }
                 else
                 {
-                    crearVino(infoVinoImportado);
+                    Vino vinoCreado = crearVino(infoVinoImportado);
+                    vinosResumenTipoVino.Add(vinoCreado);
                 }
             }
             bodegaElegida.fechaUltimaActualizacion = DateTime.Now;
-            pantallaAtualizacionVino.mostrarResumenVinosImportados(vinosResumen);
+            pantallaAtualizacionVino.mostrarResumenVinosImportados(vinosResumenTipoVino);
         }
-        public void actualizarVinoExistente(VinoActualizacion vinoActualizacion, List<Vino> vinosBD) 
+        public Vino determinarVinoAActualizar(VinoActualizacion infoVinoImportado, List<Vino> vinosBD)
         {
-            bodegaElegida.setDatosVino(vinoActualizacion, vinosBD);
+            return bodegaElegida.esTuVino(infoVinoImportado, vinosBD);
         }
-        public void crearVino(VinoActualizacion vinoCrear) {
+        public void actualizarVinoExistente(VinoActualizacion vinoActualizacion, Vino vinoAActualizar) 
+        {
+            bodegaElegida.setDatosVino(vinoActualizacion, vinoAActualizar);
+        }
+        public Vino crearVino(VinoActualizacion vinoCrear) {
             var meridaje = buscarMaridaje(vinoCrear.maridaje);
             var tipoUva = buscarTipoUva(vinoCrear.varietal.tipoUva.nombre);
             Vino vino = new Vino(meridaje,tipoUva,vinoCrear.nombre,
                 vinoCrear.añada,vinoCrear.notaDeCataBodega,
                 vinoCrear.precioARS,vinoCrear.varietal.descripcion,
                 vinoCrear.varietal.porcentajeComposicion);
+            return vino;
         }
         public Maridaje buscarMaridaje(string nombre) {
             var maridajesBD = getMaridajesSinBD();
@@ -133,24 +128,20 @@ namespace Bonvino.Controladores
         public void notificar()
         {
             var INotificacionPush = new InterfazNotificacionPush();
-            //falta completar el metodo notificarNovedadVinoBodega();
-            foreach (var enofilo in enofilosSeguidoresDeBodega)
-            {
-                INotificacionPush.notificarNovedadVinoBodega(enofilo);
-            }
+
+            INotificacionPush.notificarNovedadVinoBodega(enofilosSeguidoresDeBodega);
+            enofilosSeguidoresDeBodega.Clear();
 
         }
         public void finCU() 
         {
-            //opcional:
-            //hacer un show diagog donde pregunte si cerrar la ventana
-            //si reponde que si se cierra la pantalla
-            pantallaAtualizacionVino.Dispose();
+            MessageBox.Show("C.U 5 - Grupo Reyes del Singleton", "Fin de Caso de Uso.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
         //Hardcode
-        public List<Bodega> getBodegasSinBD() {
+        public List<Bodega> getBodegasSinBD()
+        {
             // Crear una lista de Bodegas
             List<Bodega> bodegasBD = new List<Bodega>();
 
@@ -178,13 +169,23 @@ namespace Bonvino.Controladores
         {
             List<Vino> vinosBD = new List<Vino>();
             //Vino1
-            vinosBD.Add(new Vino() {
+            vinosBD.Add(new Vino()
+            {
                 nombre = "Catena Malbec",
                 añada = 2015,
                 precioARS = 25000,
                 maridaje = new Maridaje()
                 {
+                    descripcion = "asdasd",
                     nombre = "Maridaje de Excelencia"
+                },
+                varietal = new Varietal()
+                {
+                    porcentajeComposicion = 0.67,
+                    tipoUva = new TipoUva()
+                    {
+                        nombre = "Malbec"
+                    }
                 }
             });
             //Vino2
@@ -195,7 +196,16 @@ namespace Bonvino.Controladores
                 precioARS = 17000,
                 maridaje = new Maridaje()
                 {
+                    descripcion = "asdasd",
                     nombre = "Maridaje Maestro"
+                },
+                varietal = new Varietal()
+                {
+                    porcentajeComposicion = 0.65,
+                    tipoUva = new TipoUva()
+                    {
+                        nombre = "Malbec"
+                    }
                 }
             });
             //Vino3
@@ -206,7 +216,16 @@ namespace Bonvino.Controladores
                 precioARS = 15000,
                 maridaje = new Maridaje()
                 {
+                    descripcion = "asdasd",
                     nombre = "Vinos y Sabores"
+                },
+                varietal = new Varietal()
+                {
+                    porcentajeComposicion = 0.65,
+                    tipoUva = new TipoUva()
+                    {
+                        nombre = "Malbec"
+                    }
                 }
             });
             //Vino4
@@ -217,7 +236,16 @@ namespace Bonvino.Controladores
                 precioARS = 18000,
                 maridaje = new Maridaje()
                 {
+                    descripcion = "asdasd",
                     nombre = "Maridaje de Excelencia"
+                },
+                varietal = new Varietal()
+                {
+                    porcentajeComposicion = 0.70,
+                    tipoUva = new TipoUva()
+                    {
+                        nombre = "Malbec"
+                    }
                 }
             });
             //Vino5
@@ -228,7 +256,16 @@ namespace Bonvino.Controladores
                 precioARS = 15000,
                 maridaje = new Maridaje()
                 {
+                    descripcion = "asdasd",
                     nombre = "Maridaje Maestro"
+                },
+                varietal = new Varietal()
+                {
+                    porcentajeComposicion = 0.75,
+                    tipoUva = new TipoUva()
+                    {
+                        nombre = "Malbec"
+                    }
                 }
             });
             //Vino6
@@ -239,7 +276,16 @@ namespace Bonvino.Controladores
                 precioARS = 14000,
                 maridaje = new Maridaje()
                 {
+                    descripcion = "asdasd",
                     nombre = "Vinos y Sabores"
+                },
+                varietal = new Varietal()
+                {
+                    porcentajeComposicion = 0.72,
+                    tipoUva = new TipoUva()
+                    {
+                        nombre = "Malbec"
+                    }
                 }
             });
             return vinosBD;
@@ -276,7 +322,7 @@ namespace Bonvino.Controladores
         public List<TipoUva> getTipoUvasSinBD()
         {
             List<TipoUva> tipoUvasBD = new List<TipoUva>();
-            
+
             var tipoUva1 = new TipoUva();
             tipoUva1.nombre = "Malbec";
             tipoUva1.descripcion = "Produce vinos tintos oscuros y jugosos con sabores a " +
@@ -310,7 +356,7 @@ namespace Bonvino.Controladores
             tipoUva5.descripcion = "equeñas, redondas y de piel gruesa. Son conocidas por tener bayas" +
                 " de color oscuro y alto contenido de azúcar y taninos.";
             tipoUvasBD.Add(tipoUva5);
-            
+
 
             return tipoUvasBD;
         }

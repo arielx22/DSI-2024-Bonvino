@@ -38,10 +38,11 @@ namespace Bonvino.Clases
             }
         }
         public bool sosDeBodega(Bodega bodega) {
-            if (this.bodega==null) {
-                return false;
+            if (this.bodega.nombre == bodega.nombre)
+            {
+                return true;
             }
-            return this.bodega == bodega;
+            return false;
         }
     }
 }

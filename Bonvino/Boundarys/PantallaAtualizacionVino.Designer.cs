@@ -34,14 +34,15 @@
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.TipoUva = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Varietal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Maridaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PrecioARS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Añada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Vino = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Bodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvResumenVinos = new System.Windows.Forms.DataGridView();
+            this.Bodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Vino = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Añada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PrecioARS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Maridaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Varietal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TipoUva = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NotaCata = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBodegas)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -50,20 +51,22 @@
             // 
             // btnImportarVinos
             // 
-            this.btnImportarVinos.Location = new System.Drawing.Point(12, 24);
+            this.btnImportarVinos.Location = new System.Drawing.Point(38, 33);
             this.btnImportarVinos.Name = "btnImportarVinos";
             this.btnImportarVinos.Size = new System.Drawing.Size(109, 23);
             this.btnImportarVinos.TabIndex = 0;
-            this.btnImportarVinos.Text = "Importar Vinos";
+            this.btnImportarVinos.Text = "Importar";
             this.btnImportarVinos.UseVisualStyleBackColor = true;
             this.btnImportarVinos.Click += new System.EventHandler(this.OpImportarActualizacionVino);
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.dgvBodegas);
             this.groupBox1.Location = new System.Drawing.Point(12, 62);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(161, 193);
+            this.groupBox1.Size = new System.Drawing.Size(187, 193);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bodegas";
@@ -71,23 +74,30 @@
             // 
             // dgvBodegas
             // 
+            this.dgvBodegas.AllowUserToAddRows = false;
+            this.dgvBodegas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvBodegas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBodegas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Nombre});
             this.dgvBodegas.Location = new System.Drawing.Point(6, 19);
             this.dgvBodegas.Name = "dgvBodegas";
-            this.dgvBodegas.Size = new System.Drawing.Size(148, 158);
+            this.dgvBodegas.ReadOnly = true;
+            this.dgvBodegas.Size = new System.Drawing.Size(175, 155);
             this.dgvBodegas.TabIndex = 0;
-            this.dgvBodegas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBodegas_CellContentClick);
             // 
             // Nombre
             // 
             this.Nombre.HeaderText = "Nombre";
             this.Nombre.Name = "Nombre";
+            this.Nombre.ReadOnly = true;
             // 
             // btnActualizar
             // 
-            this.btnActualizar.Location = new System.Drawing.Point(18, 261);
+            this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnActualizar.Enabled = false;
+            this.btnActualizar.Location = new System.Drawing.Point(56, 261);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(75, 23);
             this.btnActualizar.TabIndex = 2;
@@ -97,52 +107,24 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.dgvResumenVinos);
-            this.groupBox2.Location = new System.Drawing.Point(179, 62);
+            this.groupBox2.Location = new System.Drawing.Point(205, 62);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(760, 193);
+            this.groupBox2.Size = new System.Drawing.Size(1103, 193);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Resumen";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // TipoUva
-            // 
-            this.TipoUva.HeaderText = "TipoUva";
-            this.TipoUva.Name = "TipoUva";
-            // 
-            // Varietal
-            // 
-            this.Varietal.HeaderText = "Varietal";
-            this.Varietal.Name = "Varietal";
-            // 
-            // Maridaje
-            // 
-            this.Maridaje.HeaderText = "Maridaje";
-            this.Maridaje.Name = "Maridaje";
-            // 
-            // PrecioARS
-            // 
-            this.PrecioARS.HeaderText = "PrecioARS";
-            this.PrecioARS.Name = "PrecioARS";
-            // 
-            // Añada
-            // 
-            this.Añada.HeaderText = "Añada";
-            this.Añada.Name = "Añada";
-            // 
-            // Vino
-            // 
-            this.Vino.HeaderText = "Vino";
-            this.Vino.Name = "Vino";
-            // 
-            // Bodega
-            // 
-            this.Bodega.HeaderText = "Bodega";
-            this.Bodega.Name = "Bodega";
-            // 
             // dgvResumenVinos
             // 
+            this.dgvResumenVinos.AllowUserToAddRows = false;
+            this.dgvResumenVinos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvResumenVinos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResumenVinos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Bodega,
@@ -151,18 +133,68 @@
             this.PrecioARS,
             this.Maridaje,
             this.Varietal,
-            this.TipoUva});
+            this.TipoUva,
+            this.NotaCata});
             this.dgvResumenVinos.Location = new System.Drawing.Point(6, 19);
             this.dgvResumenVinos.Name = "dgvResumenVinos";
-            this.dgvResumenVinos.Size = new System.Drawing.Size(746, 158);
+            this.dgvResumenVinos.ReadOnly = true;
+            this.dgvResumenVinos.Size = new System.Drawing.Size(1087, 155);
             this.dgvResumenVinos.TabIndex = 0;
             this.dgvResumenVinos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Bodega
+            // 
+            this.Bodega.HeaderText = "Bodega";
+            this.Bodega.Name = "Bodega";
+            this.Bodega.ReadOnly = true;
+            // 
+            // Vino
+            // 
+            this.Vino.HeaderText = "Vino";
+            this.Vino.Name = "Vino";
+            this.Vino.ReadOnly = true;
+            // 
+            // Añada
+            // 
+            this.Añada.HeaderText = "Añada";
+            this.Añada.Name = "Añada";
+            this.Añada.ReadOnly = true;
+            // 
+            // PrecioARS
+            // 
+            this.PrecioARS.HeaderText = "PrecioARS";
+            this.PrecioARS.Name = "PrecioARS";
+            this.PrecioARS.ReadOnly = true;
+            // 
+            // Maridaje
+            // 
+            this.Maridaje.HeaderText = "Maridaje";
+            this.Maridaje.Name = "Maridaje";
+            this.Maridaje.ReadOnly = true;
+            // 
+            // Varietal
+            // 
+            this.Varietal.HeaderText = "Varietal";
+            this.Varietal.Name = "Varietal";
+            this.Varietal.ReadOnly = true;
+            // 
+            // TipoUva
+            // 
+            this.TipoUva.HeaderText = "TipoUva";
+            this.TipoUva.Name = "TipoUva";
+            this.TipoUva.ReadOnly = true;
+            // 
+            // NotaCata
+            // 
+            this.NotaCata.HeaderText = "Nota de Cata";
+            this.NotaCata.Name = "NotaCata";
+            this.NotaCata.ReadOnly = true;
             // 
             // PantallaAtualizacionVino
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(943, 292);
+            this.ClientSize = new System.Drawing.Size(1326, 293);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.groupBox1);
@@ -194,6 +226,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Maridaje;
         private System.Windows.Forms.DataGridViewTextBoxColumn Varietal;
         private System.Windows.Forms.DataGridViewTextBoxColumn TipoUva;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NotaCata;
     }
 }
 

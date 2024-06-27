@@ -20,7 +20,7 @@ namespace Bonvino
         private Bodega bodegaElegida;
         public PantallaAtualizacionVino()
         {
-            gestor = new GestorActualizacionVino(this);
+            gestor = new GestorActualizacionVino();
             bodegaElegida = new Bodega();
             InitializeComponent();
         }
@@ -35,31 +35,26 @@ namespace Bonvino
         }
         public void habilitarPantalla()
         {
-            gestor.opImportarActualizacionVino();
+            gestor.opImportarActualizacionVino(this);
         }
         public void mostrarBodegasActualizables(List<Bodega> bodegas)
         {
+            btnActualizar.Enabled = true;
             dgvBodegas.Rows.Clear();
             this.bodegas = bodegas;
             foreach (var bodega in this.bodegas)
             {
-                /*
-                var fila = new string[] {
-                    bodega.nombre.ToString()
-                };
-                dgvBodegas.Rows.Add(fila);*/
                 dgvBodegas.Rows.Add(bodega.nombre);
             }
-
+            dgvBodegas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
         private void seleccionBodega(object sender, EventArgs e)
         {
             bodegaElegida.nombre = dgvBodegas.CurrentCell.Value.ToString();
-            gestor.seleccionBodega(bodegaElegida);
+            gestor.seleccionBodega(bodegaElegida, this);
         }
-        public void mostrarResumenVinosImportados(List<VinoActualizacion> vinosResumen)
+        public void mostrarResumenVinosImportados(List<Vino> vinosResumen)
         {
-            //completar
             dgvResumenVinos.Rows.Clear();
             foreach (var vino in vinosResumen)
             {
@@ -68,21 +63,19 @@ namespace Bonvino
                     vino.nombre,
                     vino.añada.ToString(),
                     vino.precioARS.ToString(),
-                    vino.maridaje.ToString(),
+                    vino.maridaje.nombre.ToString(),
                     vino.varietal.porcentajeComposicion.ToString(),
-                    vino.varietal.tipoUva.nombre
+                    vino.varietal.tipoUva.nombre,
+                    vino.notaDeCataBodega
                 };
                 dgvResumenVinos.Rows.Add(fila);
             }
+            //Me ajusta dinamicamente el tamaño de las columnas
+            dgvResumenVinos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvBodegas_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

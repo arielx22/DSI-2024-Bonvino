@@ -28,29 +28,24 @@ namespace Bonvino.Clases
             }
             return false;
         }
-        public Vino esTuVino(VinoActualizacion vinoImportado, List<Vino> vinosBD)
+        public Vino esTuVino(VinoActualizacion infoVinoImportado, List<Vino> vinosBD)
         {
             foreach (Vino vino in vinosBD)
             {
-                if (vino.sosEsteVino(vinoImportado) != null)
+                if (vino.sosEsteVino(infoVinoImportado) != null)
                 {
                     return vino;
                 }
             }   
             return null;
         }
-        public void setDatosVino(VinoActualizacion vinoActualizar, List<Vino> vinosBD)
-        {
-            foreach (Vino vino in vinosBD)
-            {
-               if (vino.sosVinoAActualizar(vinoActualizar.nombre,vinoActualizar.añada)) {
-                    vino.fechaActualizacion = DateTime.Now;
-                    vino.imagenEtiqueta = vinoActualizar.imagenEtiqueta;
-                    vino.precioARS = vinoActualizar.precioARS;
-                    vino.notaDeCataBodega = vinoActualizar.notaDeCataBodega;
-               }
-            }
 
+        public void setDatosVino(VinoActualizacion infoVinoImportado, Vino vinoAActualizar)
+        {
+            vinoAActualizar.fechaActualizacion = DateTime.Now;
+            vinoAActualizar.imagenEtiqueta = infoVinoImportado.imagenEtiqueta;
+            vinoAActualizar.precioARS = infoVinoImportado.precioARS;
+            vinoAActualizar.notaDeCataBodega = infoVinoImportado.notaDeCataBodega;
         }
     }
 }
