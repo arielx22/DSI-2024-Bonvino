@@ -51,6 +51,8 @@
     <Compile Include="Clases\Actualizacion\TipoUvaActualizacion.cs" />
     <Compile Include="Clases\Bodega.cs" />
     <Compile Include="Clases\Enofilo.cs" />
+    <Compile Include="Clases\Interfaces\ISujeto.cs" />
+    <Compile Include="Clases\Interfaces\IObserverNotificacionVinosBodega.cs" />
     <Compile Include="Clases\Maridaje.cs" />
     <Compile Include="Clases\Siguiendo.cs" />
     <Compile Include="Clases\TipoUva.cs" />

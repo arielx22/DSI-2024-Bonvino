@@ -1,6 +1,7 @@
 ﻿using Bonvino.Boundarys;
 using Bonvino.Clases;
 using Bonvino.Clases.Actualizacion;
+using Bonvino.Clases.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,30 @@ using System.Windows.Forms;
 
 namespace Bonvino.Controladores
 {
-    public class GestorActualizacionVino
+    public class GestorActualizacionVino : ISujeto
     {
         private List<Bodega> bodegas;
         private Bodega bodegaElegida;
         private List<VinoActualizacion> infoVinosImportados;
         private List<Enofilo> enofilosSeguidoresDeBodega;
-        
+
+        private List<Vino> vinos;
+
+        //implementación del atributo elementos de ISujeto
+        public List<IObserverNotificacionVinosBodega> elementos { get; set; }
+
+
         public GestorActualizacionVino() {
             bodegas = new List<Bodega>();
             enofilosSeguidoresDeBodega = new List<Enofilo>();
+            elementos = new List<IObserverNotificacionVinosBodega>();
+            vinos = new List<Vino>();
         }
         public void opImportarActualizacionVino(PantallaAtualizacionVino pantallaAtualizacionVino) {
             buscarBodegaActualizacionDisponible();
             pantallaAtualizacionVino.mostrarBodegasActualizables(bodegas);
         }
+        //Analisis
         public void buscarBodegaActualizacionDisponible()
         {
             //Para que no se repitan las bodegas en la lista, 
@@ -43,12 +53,15 @@ namespace Bonvino.Controladores
                 }
             }
         }
+
         public void seleccionBodega(Bodega bodegaElegida, PantallaAtualizacionVino pantallaAtualizacionVino)
         {
             this.bodegaElegida = bodegaElegida;
             buscarActualizaciones();
             setOrNewVinos(pantallaAtualizacionVino);
             buscarSeguidoresBodega();
+            var iNotificacionPush = new InterfazNotificacionPush();
+            suscribir(iNotificacionPush);
             notificar();
             finCU();
         }
@@ -61,24 +74,24 @@ namespace Bonvino.Controladores
        
         public void setOrNewVinos(PantallaAtualizacionVino pantallaAtualizacionVino)
         {
+            vinos.Clear();
             var vinosBD = getVinosSinBD();
-            var vinosResumenTipoVino = new List<Vino>();
             foreach (var infoVinoImportado in infoVinosImportados)
             {
                 var vinoBuscado = determinarVinoAActualizar(infoVinoImportado, vinosBD);
                 if (vinoBuscado != null)
                 {
                     actualizarVinoExistente(infoVinoImportado, vinoBuscado);
-                    vinosResumenTipoVino.Add(vinoBuscado);
+                    vinos.Add(vinoBuscado);
                 }
                 else
                 {
-                    Vino vinoCreado = crearVino(infoVinoImportado);
-                    vinosResumenTipoVino.Add(vinoCreado);
+                    vinos.Add(crearVino(infoVinoImportado));
                 }
             }
             bodegaElegida.fechaUltimaActualizacion = DateTime.Now;
-            pantallaAtualizacionVino.mostrarResumenVinosImportados(vinosResumenTipoVino);
+            pantallaAtualizacionVino.mostrarResumenVinosImportados(vinos);
+
         }
         public Vino determinarVinoAActualizar(VinoActualizacion infoVinoImportado, List<Vino> vinosBD)
         {
@@ -125,18 +138,39 @@ namespace Bonvino.Controladores
                 }      
             }
         }
-        public void notificar()
+        //analisis
+        /*public void notificar()
         {
             var INotificacionPush = new InterfazNotificacionPush();
-
             INotificacionPush.notificarNovedadVinoBodega(enofilosSeguidoresDeBodega);
             enofilosSeguidoresDeBodega.Clear();
 
+        }*/
+        public void suscribir(IObserverNotificacionVinosBodega observador)
+        {
+            elementos.Add(observador);
+        }
+        public void notificar()
+        { 
+            List<string> usuarios = new List<string>();
+            foreach (var enofilo in enofilosSeguidoresDeBodega) { usuarios.Add(enofilo.usuario.nombre); } 
+
+            foreach (var vino in vinos)
+            {
+                elementos[0].actualizar(bodegaElegida.nombre, vino.nombre, vino.añada, vino.precioARS, vino.maridaje.nombre, vino.varietal.descripcion, vino.varietal.tipoUva.nombre, vino.notaDeCataBodega, usuarios);
+            }    
+    
+     
+        }
+        public void quitar(IObserverNotificacionVinosBodega observador)
+        {
+            throw new NotImplementedException();
         }
         public void finCU() 
         {
             MessageBox.Show("C.U 5 - Grupo Reyes del Singleton", "Fin de Caso de Uso.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+       
 
 
         //Hardcode
@@ -434,5 +468,7 @@ namespace Bonvino.Controladores
             });
             return enofilosBD;
         }
+
+        
     }
 }
