@@ -10,18 +10,17 @@ namespace Bonvino.Pesistecia.Repositorio
 {
     public class MaridajeRepositorio
     {
-        public List<Maridaje> ObtenerMaridaje()
+        public Maridaje ObtenerMaridaje(string nombre)
         {
-            List<Maridaje> maridaje = new List<Maridaje>();
-            var sentenciaSql = "SELECT * FROM Maridaje";
+            var maridaje = new Maridaje();
+            var sentenciaSql = $"SELECT * FROM maridaje WHERE Nombre like {nombre}";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
-            foreach (DataRow fila in tabla.Rows)
+            if (tabla.Rows.Count > 0)
             {
-                /*var usuario = new Usuario();
-                usuario.nombre = fila["Nombre"].ToString();
-                usuario.contraseña = fila["Contraseña"].ToString();
-                usuario.premium = fila["Premium"].ToString() == "0" ? false : true;
-                usuarios.Add(usuario);*/
+                var fila = tabla.Rows[0];
+                maridaje.nombre = fila["Nombre"].ToString();
+                if (!string.IsNullOrEmpty(fila["Descripcion"].ToString()))
+                    maridaje.descripcion = fila["Descripcion"].ToString();
             }
             return maridaje;
         }

@@ -2,6 +2,7 @@
 using Bonvino.Clases;
 using Bonvino.Clases.Actualizacion;
 using Bonvino.Clases.Interfaces;
+using Bonvino.Pesistecia.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,14 @@ namespace Bonvino.Controladores
         //implementación del atributo elementos de ISujeto
         public List<IObserverNotificacionVinosBodega> elementos { get; set; }
 
+        //persistencia
+        private BodegaRepositorio bodegaRepositorio;
+        private VinoRepositorio vinoRepositorio;
+        private MaridajeRepositorio maridajeRepositorio;
+        private VarietalRepositorio varietalRepositorio;
+        private TipoUvaRepositorio tipoUvaRepositorio;
+        private UsuarioRepositorio usuarioRepositorio;
+        private EnofiloRepositorio enofilosRepositorio;
 
         public GestorActualizacionVino() {
             bodegas = new List<Bodega>();
@@ -33,6 +42,13 @@ namespace Bonvino.Controladores
             usuarios = new List<string>();
             nombreVinos = new List<string>();
             añadaVinos = new List<int>();
+            bodegaRepositorio = new BodegaRepositorio();
+            vinoRepositorio = new VinoRepositorio();
+            maridajeRepositorio = new MaridajeRepositorio();
+            varietalRepositorio = new VarietalRepositorio();
+            tipoUvaRepositorio = new TipoUvaRepositorio();
+            enofilosRepositorio = new EnofiloRepositorio();
+            usuarioRepositorio = new UsuarioRepositorio();
         }
         public void opImportarActualizacionVino(PantallaAtualizacionVino pantallaAtualizacionVino) {
             buscarBodegaActualizacionDisponible();
@@ -48,7 +64,8 @@ namespace Bonvino.Controladores
             //Para que no se repitan las bodegas en la lista, 
             //cuando se hace click en el boton importar.
             bodegas.Clear();
-            var bodegasBD = getBodegasSinBD();
+            //var bodegasBD = getBodegasSinBD(); //Analisis
+            var bodegasBD = bodegaRepositorio.ObtenerBodegas();
             DateTime fechaActual = DateTime.Now;
             int i = 0;
             foreach (var bodega in bodegasBD)
@@ -111,7 +128,9 @@ namespace Bonvino.Controladores
             nombreVinos.Clear();
             añadaVinos.Clear();
             int i = 0;
-            var vinosBD = getVinosSinBD();
+            //var vinosBD = getVinosSinBD(); //Analisis
+            var vinosBD = vinoRepositorio.ObtenerVinos(bodegaElegida, maridajeRepositorio,
+                varietalRepositorio, tipoUvaRepositorio);
             foreach (var infoVinoImportado in infoVinosImportados)
             {
                 var vinoBuscado = determinarVinoAActualizar(infoVinoImportado, vinosBD);

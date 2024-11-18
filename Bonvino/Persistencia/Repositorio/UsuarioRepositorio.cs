@@ -10,10 +10,10 @@ namespace Bonvino.Pesistecia.Repositorio
 {
     public class UsuarioRepositorio
     {
-        public List<Usuario> ObtenerUsuario()
+        public List<Usuario> ObtenerUsuarios()
         {
             List<Usuario> usuarios = new List<Usuario>();
-            var sentenciaSql = "SELECT * FROM Usuario";
+            var sentenciaSql = "SELECT * FROM usuario";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
             foreach (DataRow fila in tabla.Rows)
             {

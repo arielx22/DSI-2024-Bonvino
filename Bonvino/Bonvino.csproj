@@ -72,7 +72,8 @@
     <Compile Include="Persistencia\Repositorio\BodegaRepositorio.cs" />
     <Compile Include="Persistencia\Repositorio\EnofiloRepositorio.cs" />
     <Compile Include="Persistencia\Repositorio\MaridajeRepositorio.cs" />
-    <Compile Include="Persistencia\Repositorio\TipoUvaPersistencia.cs" />
+    <Compile Include="Persistencia\Repositorio\SiguiendoRepositorio.cs" />
+    <Compile Include="Persistencia\Repositorio\TipoUvaRepositorio.cs" />
     <Compile Include="Persistencia\Repositorio\UsuarioRepositorio.cs" />
     <Compile Include="Persistencia\Repositorio\VarietalRepositorio.cs" />
     <Compile Include="Persistencia\Repositorio\VinoRepositorio.cs" />
