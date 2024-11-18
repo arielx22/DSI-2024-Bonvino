@@ -32,11 +32,9 @@ namespace Bonvino.Pesistecia.Repositorio
                 if (!string.IsNullOrEmpty(fila["NotaDeCataBodega"].ToString())) 
                     vino.notaDeCataBodega = fila["NotaDeCataBodega"].ToString();
                 vino.precioARS = Convert.ToSingle(fila["NotaDeCataBodega"].ToString());
-                var varietal = varietalRepositorio.ObtenerVarietal(
-                    Convert.ToInt32(fila["VarietalId"].ToString()),tipoUvaRepositorio);
-                vino.varietal = varietal;
-                var maridaje = maridajeRepositorio.ObtenerMaridaje(fila["MaridajeNombre"].ToString());
-                vino.maridaje = maridaje;
+                vino.varietal = varietalRepositorio.ObtenerVarietal(
+                    Convert.ToInt32(fila["VarietalId"].ToString()), tipoUvaRepositorio);
+                vino.maridaje = maridajeRepositorio.ObtenerMaridaje(fila["MaridajeNombre"].ToString());
                 vino.bodega = bodega;
                 vinos.Add(vino);
             }

@@ -19,8 +19,7 @@ namespace Bonvino.Pesistecia.Repositorio
             {
                 var fila = tabla.Rows[0];
                 varietal.descripcion = fila["Descripcion"].ToString();
-                var tipoUva = tipoUvaRepositorio.ObtenerTipoUva(fila["tipouva_Nombre"].ToString());
-                varietal.tipoUva = tipoUva;
+                varietal.tipoUva = tipoUvaRepositorio.ObtenerTipoUva(fila["tipouva_Nombre"].ToString());
                 if (!string.IsNullOrEmpty(fila["NotaDeCataBodega"].ToString()))
                     varietal.porcentajeComposicion = Convert.ToDouble(fila["NotaDeCataBodega"].ToString());
             }

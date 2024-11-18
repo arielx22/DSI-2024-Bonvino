@@ -1,5 +1,6 @@
 ﻿using Bonvino.Clases;
 using Bonvino.Pesistecia;
+using Bonvino.Pesistecia.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,23 +12,21 @@ namespace Bonvino.Persistencia.Repositorio
 {
     public class SiguiendoRepositorio
     {
-        public List<Siguiendo> ObtenerEnofilos(string bodega)
+        public List<Enofilo> ObtenerEnofilosSeguidores(Bodega bodega, EnofiloRepositorio enofiloRepositorio,
+            UsuarioRepositorio usuarioRepositorio)
         {
-            List<Siguiendo> siguiendos = new List<Siguiendo>();
-            var sentenciaSql = $"SELECT * FROM enofilo WHERE '{bodega}' like BodegaNombre";
+            List<Enofilo> enofilos = new List<Enofilo>();
+            var sentenciaSql = $"SELECT * FROM enofilo WHERE '{bodega.nombre}' like BodegaNombre";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
             foreach (DataRow fila in tabla.Rows)
             {
                 var siguiendo = new Siguiendo();
-                
- 
-                /*
-                usuario.nombre = fila["Nombre"].ToString();
-                usuario.contraseña = fila["Contraseña"].ToString();
-                usuario.premium = fila["Premium"].ToString() == "0" ? false : true;
-                enofilos.Add(usuario);*/
+                siguiendo.bodegaME = bodega;
+                var enofilo = enofiloRepositorio.ObtenerEnofilo(Convert.ToInt32(fila["id"].ToString()),
+                    siguiendo, usuarioRepositorio);
+                enofilos.Add(enofilo);
             }
-            return siguiendos;
+            return enofilos;
         }
     }
 }

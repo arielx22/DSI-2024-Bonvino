@@ -2,6 +2,7 @@
 using Bonvino.Clases;
 using Bonvino.Clases.Actualizacion;
 using Bonvino.Clases.Interfaces;
+using Bonvino.Persistencia.Repositorio;
 using Bonvino.Pesistecia.Repositorio;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace Bonvino.Controladores
         private TipoUvaRepositorio tipoUvaRepositorio;
         private UsuarioRepositorio usuarioRepositorio;
         private EnofiloRepositorio enofilosRepositorio;
+        private SiguiendoRepositorio siguiendoRepositorio;
 
         public GestorActualizacionVino() {
             bodegas = new List<Bodega>();
@@ -49,6 +51,7 @@ namespace Bonvino.Controladores
             tipoUvaRepositorio = new TipoUvaRepositorio();
             enofilosRepositorio = new EnofiloRepositorio();
             usuarioRepositorio = new UsuarioRepositorio();
+            siguiendoRepositorio = new SiguiendoRepositorio();
         }
         public void opImportarActualizacionVino(PantallaAtualizacionVino pantallaAtualizacionVino) {
             buscarBodegaActualizacionDisponible();
@@ -186,11 +189,14 @@ namespace Bonvino.Controladores
             return null;
         }
         public void buscarSeguidoresBodega(){
-            var enofilosBD = GetEnofilosSinBD();
+            //var enofilosBD = GetEnofilosSinBD();//Analisis
+            var enofilosBD = siguiendoRepositorio.ObtenerEnofilosSeguidores(bodegaElegida,enofilosRepositorio,
+                usuarioRepositorio);
             usuarios.Clear();
             foreach (var enofilo in enofilosBD)
             {
-                if (enofilo.seguisABodega(bodegaElegida)) {
+
+                if (enofilo.SeguisABodega(bodegaElegida)) {
                     //hace un atributo de array para los usuarios
                     enofilosSeguidoresDeBodega.Add(enofilo);
                     usuarios.Add(enofilo.usuario.nombre);        
@@ -459,11 +465,14 @@ namespace Bonvino.Controladores
             {
                 apellido = "Allende",
                 nombre = "Facundo",
-                siguiendo = new Siguiendo
+                siguiendoList = new List<Siguiendo>
                 {
-                    bodegaME = new Bodega
+                    new Siguiendo
                     {
-                        nombre = "Bodega Catena Zapata"
+                        bodegaME = new Bodega
+                        {
+                            nombre = "Bodega Catena Zapata"
+                        }
                     }
                 },
                 usuario = new Usuario
@@ -476,11 +485,14 @@ namespace Bonvino.Controladores
             {
                 apellido = "Zarate",
                 nombre = "Ignacio",
-                siguiendo = new Siguiendo
+                siguiendoList = new List<Siguiendo>
                 {
-                    bodegaME = new Bodega
+                    new Siguiendo
                     {
-                        nombre = "Bodega Catena Zapata"
+                        bodegaME = new Bodega
+                        {
+                            nombre = "Bodega Catena Zapata"
+                        }
                     }
                 },
                 usuario = new Usuario
@@ -493,11 +505,15 @@ namespace Bonvino.Controladores
             {
                 apellido = "Braschi",
                 nombre = "Cesar",
-                siguiendo = new Siguiendo
+                siguiendoList = new List<Siguiendo>
                 {
-                    bodegaME = new Bodega
+
+                    new Siguiendo
                     {
-                        nombre = "Bodega Norton"
+                        bodegaME = new Bodega
+                        {
+                            nombre = "Bodega Norton"
+                        }
                     }
                 },
                 usuario = new Usuario
@@ -510,11 +526,14 @@ namespace Bonvino.Controladores
             {
                 apellido = "Posadas",
                 nombre = "Lucas",
-                siguiendo = new Siguiendo
+                siguiendoList = new List<Siguiendo>
                 {
-                    bodegaME = new Bodega
+                    new Siguiendo
                     {
-                        nombre = "Bodega Norton"
+                        bodegaME = new Bodega
+                        {
+                            nombre = "Bodega Norton"
+                        }
                     }
                 },
                 usuario = new Usuario

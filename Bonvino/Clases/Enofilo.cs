@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bonvino.Clases
 {
@@ -13,10 +15,11 @@ namespace Bonvino.Clases
         public byte[] imagenPerfil { get; set; }
         public string nombre { get; set; }
         public Usuario usuario { get; set; }
-        public Siguiendo siguiendo { get; set; }
-        public bool seguisABodega(Bodega bodega)
+        public List<Siguiendo> siguiendoList { get; set; }
+        public bool SeguisABodega(Bodega bodegaSeleccionada)
         {
-            return this.siguiendo.sosDeBodega(bodega);
+            return siguiendoList.Any(siguiendo => siguiendo.sosDeBodega(bodegaSeleccionada));
         }
+
     }
 }

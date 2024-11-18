@@ -10,20 +10,19 @@ namespace Bonvino.Pesistecia.Repositorio
 {
     public class UsuarioRepositorio
     {
-        public List<Usuario> ObtenerUsuarios()
+        public Usuario ObtenerUsuario(int id)
         {
-            List<Usuario> usuarios = new List<Usuario>();
-            var sentenciaSql = "SELECT * FROM usuario";
+            var usuario = new Usuario();
+            var sentenciaSql = $"SELECT * FROM usuario WHERE Id = {id}";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
-            foreach (DataRow fila in tabla.Rows)
+            if (tabla.Rows.Count > 0)
             {
-                var usuario = new Usuario();
+                var fila = tabla.Rows[0];
                 usuario.nombre = fila["Nombre"].ToString();
                 usuario.contraseña = fila["Contraseña"].ToString();
                 usuario.premium = fila["Premium"].ToString() == "0" ? false : true;
-                usuarios.Add(usuario);
             }
-            return usuarios;
+            return usuario;
         }
     }
 }

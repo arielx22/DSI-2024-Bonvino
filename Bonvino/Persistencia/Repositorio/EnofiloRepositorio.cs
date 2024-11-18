@@ -10,22 +10,22 @@ namespace Bonvino.Pesistecia.Repositorio
 {
     public class EnofiloRepositorio
     {
-        public List<Enofilo> ObtenerEnofilos(string bodega)
+        public Enofilo ObtenerEnofilo(int id, Siguiendo siguiendo,UsuarioRepositorio usuarioRepositorio)
         {
-            List<Enofilo> enofilos = new List<Enofilo>();
-            var sentenciaSql = "SELECT * FROM enofilo ";
+            var enofilo = new Enofilo();
+            var sentenciaSql = $"SELECT * FROM enofilo WHERE Id = {id}";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
-            foreach (DataRow fila in tabla.Rows)
+            if (tabla.Rows.Count > 0)
             {
-                var enofilo = new Enofilo();
+                var fila = tabla.Rows[0];
                 enofilo.nombre = fila["Nombre"].ToString();
-                /*
-                usuario.nombre = fila["Nombre"].ToString();
-                usuario.contraseña = fila["Contraseña"].ToString();
-                usuario.premium = fila["Premium"].ToString() == "0" ? false : true;
-                enofilos.Add(usuario);*/
+                enofilo.apellido = fila["Apellido"].ToString();
+                var siguiendos = new List<Siguiendo>();
+                siguiendos.Add(siguiendo);
+                enofilo.siguiendoList = siguiendos;
+                enofilo.usuario = usuarioRepositorio.ObtenerUsuario(id);
             }
-            return enofilos;
+            return enofilo;
         }
     }
 }
