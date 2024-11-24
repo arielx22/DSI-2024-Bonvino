@@ -29,38 +29,6 @@ namespace Bonvino.Boundarys
 
             MessageBox.Show(nombresEnofilos.ToString(), "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }*/
-        /*public void actualizar(string bodega, string vino, int añada, float precioARS, string maridaje, string varietal, string tipoUva, string notaDeCata, List<string> usuarios)
-        {
-
-            // Almacena la información del vino
-            vinosNotificados.Add($"Bodega: {bodega}, Vino: {vino}, Añada: {añada}, Precio: {precioARS}, Maridaje: {maridaje}, Varietal: {varietal}, Tipo Uva: {tipoUva}, Nota de Cata: {notaDeCata}");
-            // Almacena el usuario, evitando duplicados
-            this.usuariosNotificados = usuarios;
-            notificarNovedadVinoBodega();
-        }*/
-        public void notificarNovedadVinoBodega(string bodega, string vino, int añada, float precioARS, string maridaje, string varietal, string tipoUva, string notaDeCata, string usuario) {
-
-            StringBuilder mensaje = new StringBuilder("Estos vinos con sus datos fueron notificados a los siguientes usuarios enófilos:\n\n");
-
-            // Agregar información de los vinos
-            /*foreach (var vinoInfo in vinosNotificados)
-            {
-                mensaje.AppendLine(vinoInfo);
-            }
-
-            // Agregar usuarios notificados
-            mensaje.AppendLine("\nUsuarios notificados:");
-            foreach (var usuario in usuariosNotificados)
-            {
-                mensaje.AppendLine(usuario);
-            }
-
-            MessageBox.Show(mensaje.ToString(), "Notificación de Vinos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Limpiar las listas después de mostrarlas
-            vinosNotificados.Clear(); */
-
-        }
         public void notificarNovedadVinoBodega(string bodega,List<string> vino, List<int> añada, string usuario)
         {
             StringBuilder mensaje = new StringBuilder();

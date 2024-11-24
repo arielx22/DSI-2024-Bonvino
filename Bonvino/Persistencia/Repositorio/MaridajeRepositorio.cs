@@ -13,7 +13,7 @@ namespace Bonvino.Pesistecia.Repositorio
         public Maridaje ObtenerMaridaje(string nombre)
         {
             var maridaje = new Maridaje();
-            var sentenciaSql = $"SELECT * FROM maridaje WHERE Nombre like {nombre}";
+            var sentenciaSql = $"SELECT * FROM maridaje WHERE Nombre like '{nombre}'";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
             if (tabla.Rows.Count > 0)
             {
@@ -23,6 +23,21 @@ namespace Bonvino.Pesistecia.Repositorio
                     maridaje.descripcion = fila["Descripcion"].ToString();
             }
             return maridaje;
+        }
+        public List<Maridaje> ObtenerMaridajes()
+        {
+            var maridajes = new List<Maridaje>();
+            var sentenciaSql = "SELECT * FROM Maridaje";
+            var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
+            foreach (DataRow fila in tabla.Rows)
+            {
+                var maridaje = new Maridaje();
+                maridaje.nombre = fila["nombre"].ToString();
+                if(!string.IsNullOrEmpty(fila["descripcion"].ToString()))
+                    maridaje.descripcion = fila["descripcion"].ToString();
+                maridajes.Add(maridaje);
+            }
+            return maridajes;
         }
     }
 }

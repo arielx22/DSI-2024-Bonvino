@@ -12,12 +12,13 @@ namespace Bonvino.Clases
         public Vino() { }
         public Vino(Maridaje maridaje,TipoUva tipoUva, string nombre, int añada, 
             string notaDeCataBodega, float precioARS, string descripcion,
-            double porcentajeComposicion) {
+            double porcentajeComposicion, Bodega bodega) {
             this.maridaje = maridaje;
             this.nombre = nombre;
             this.añada = añada;
             this.notaDeCataBodega = notaDeCataBodega;
             this.precioARS = precioARS;
+            this.bodega = bodega;
             crearVarietal(tipoUva, descripcion, porcentajeComposicion);
         }
         public int añada { get; set; }

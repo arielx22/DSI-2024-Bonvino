@@ -12,7 +12,7 @@ namespace Bonvino.Clases
         public Bodega() { }
         public string nombre { get; set; }
         public string historia { get; set; }
-        public List<int> coordenadasUbicacion { get; set; }
+        public List<float> coordenadasUbicacion { get; set; }
         public string descripcion { get; set; }
         public int periodoActualizacion { get; set; }
         public DateTime fechaUltimaActualizacion { get; set; }

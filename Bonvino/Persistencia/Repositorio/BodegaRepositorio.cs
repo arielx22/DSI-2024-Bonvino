@@ -18,24 +18,19 @@ namespace Bonvino.Pesistecia.Repositorio
             foreach (DataRow fila in tabla.Rows)
             {
                 var bodega = new Bodega();
-                bodega.nombre = fila["Nombre"].ToString();
-                if (!string.IsNullOrEmpty(fila["Historia"].ToString())) bodega.historia = fila["Historia"].ToString();
-                if (!string.IsNullOrEmpty(fila["Descripcion"].ToString())) bodega.descripcion = fila["Descripcion"].ToString();
-                bodega.periodoActualizacion = Convert.ToInt32(fila["PeriodoActualizacion"].ToString());
-                bodega.fechaUltimaActualizacion = Convert.ToDateTime(fila["FechaUltimaActualizacion"].ToString());
-                if (!string.IsNullOrEmpty(fila["CoordenadasUbicacion"].ToString()))
+                bodega.nombre = fila["nombre"].ToString();
+                if (!string.IsNullOrEmpty(fila["historia"].ToString())) bodega.historia = fila["historia"].ToString();
+                if (!string.IsNullOrEmpty(fila["descripcion"].ToString())) bodega.descripcion = fila["descripcion"].ToString();
+                bodega.periodoActualizacion = Convert.ToInt32(fila["periodoActualizacion"]);
+                bodega.fechaUltimaActualizacion = Convert.ToDateTime(fila["fechaUltimaActualizacion"]);
+                if (fila["CoordenadasUbicacionEnX"] != DBNull.Value && fila["CoordenadasUbicacionEnY"] != DBNull.Value)
                 {
-                    // Obtener el string de las coordenadas
-                    string coordenadasStr = fila["CoordenadasUbicacion"].ToString();
+                    // Convertir las coordenadas en float y agregarlas a la lista
+                    float coordenadaX = Convert.ToSingle(fila["CoordenadasUbicacionEnX"]);
+                    float coordenadaY = Convert.ToSingle(fila["CoordenadasUbicacionEnY"]);
 
-                    // Separar la cadena por comas y convertir cada valor a int
-                    List<int> coordenadas = coordenadasStr
-                        .Split(',') // Usamos la coma como delimitador
-                        .Select(s => int.Parse(s.Trim())) // Convertir cada fragmento a entero
-                        .ToList();
-
-                    // Asignar la lista al objeto 'bodega'
-                    bodega.coordenadasUbicacion = coordenadas;
+                    // Crear la lista de coordenadas y asignarla a la propiedad de la bodega
+                    bodega.coordenadasUbicacion = new List<float> { coordenadaX, coordenadaY };
                 }
                 bodegas.Add(bodega);
             }

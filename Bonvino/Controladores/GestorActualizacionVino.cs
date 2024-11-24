@@ -98,6 +98,12 @@ namespace Bonvino.Controladores
             }
 
             setOrNewVinos(pantallaAtualizacionVino);
+            //CASO Alternativo: Verificar si no se actualizaron o crearon vinos
+            if (vinos.Count == 0)
+            {
+                MessageBox.Show("No hay actualizaciones o nuevos vinos para la bodega seleccionada.", "Sin Actualizaciones", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;  // Detener la operación si no hay actualizaciones
+            }
             buscarSeguidoresBodega();
             if (usuarios.Count == 0)
             {
@@ -170,18 +176,20 @@ namespace Bonvino.Controladores
             Vino vino = new Vino(meridaje,tipoUva,vinoCrear.nombre,
                 vinoCrear.añada,vinoCrear.notaDeCataBodega,
                 vinoCrear.precioARS,vinoCrear.varietal.descripcion,
-                vinoCrear.varietal.porcentajeComposicion);
+                vinoCrear.varietal.porcentajeComposicion, bodegaElegida);
             return vino;
         }
         public Maridaje buscarMaridaje(string nombre) {
-            var maridajesBD = getMaridajesSinBD();
+            //var maridajesBD = getMaridajesSinBD(); //Analisis
+            var maridajesBD = maridajeRepositorio.ObtenerMaridajes();
             foreach (var maridajeBD in maridajesBD) {
                 if (maridajeBD.sosMaridaje(nombre)) return maridajeBD;
             }
             return null;
         }
         public TipoUva buscarTipoUva(string nombre){
-            var tipoUvasBD = getTipoUvasSinBD();
+            //var tipoUvasBD = getTipoUvasSinBD(); //Analisis
+            var tipoUvasBD = tipoUvaRepositorio.ObtenerTiposUva();
             foreach (var tipoUvaBD in tipoUvasBD)
             {
                 if (tipoUvaBD.sosTipoUva(nombre)) return tipoUvaBD;

@@ -23,7 +23,7 @@ namespace Bonvino.Pesistecia.Repositorio
                 var siguiendos = new List<Siguiendo>();
                 siguiendos.Add(siguiendo);
                 enofilo.siguiendoList = siguiendos;
-                enofilo.usuario = usuarioRepositorio.ObtenerUsuario(id);
+                enofilo.usuario = usuarioRepositorio.ObtenerUsuario(fila["nombreUsuario"].ToString());
             }
             return enofilo;
         }

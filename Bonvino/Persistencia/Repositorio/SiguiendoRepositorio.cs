@@ -16,7 +16,7 @@ namespace Bonvino.Persistencia.Repositorio
             UsuarioRepositorio usuarioRepositorio)
         {
             List<Enofilo> enofilos = new List<Enofilo>();
-            var sentenciaSql = $"SELECT * FROM enofilo WHERE '{bodega.nombre}' like BodegaNombre";
+            var sentenciaSql = $"SELECT * FROM Siguiendo WHERE '{bodega.nombre}' like BodegaNombre";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
             foreach (DataRow fila in tabla.Rows)
             {

@@ -20,21 +20,21 @@ namespace Bonvino.Pesistecia.Repositorio
             foreach (DataRow fila in tabla.Rows)
             {
                 var vino = new Vino();
-                vino.añada = Convert.ToInt32(fila["Anada"].ToString());
-                vino.nombre = fila["Nombre"].ToString();
-                if (!string.IsNullOrEmpty(fila["FechaActualizacion"].ToString())) 
-                    vino.fechaActualizacion = Convert.ToDateTime(fila["FechaActualizacion"].ToString());
+                vino.añada = Convert.ToInt32(fila["añada"]);
+                vino.nombre = fila["nombre"].ToString();
+                if (!string.IsNullOrEmpty(fila["fechaActualizacion"].ToString())) 
+                    vino.fechaActualizacion = Convert.ToDateTime(fila["fechaActualizacion"].ToString());
                 if (fila["ImagenEtiqueta"] != DBNull.Value)
                 {
                     // Asignar el valor de la base de datos al byte[]
-                    vino.imagenEtiqueta = (byte[])fila["ImagenEtiqueta"];
+                    vino.imagenEtiqueta = (byte[])fila["imagenEtiqueta"];
                 }
-                if (!string.IsNullOrEmpty(fila["NotaDeCataBodega"].ToString())) 
-                    vino.notaDeCataBodega = fila["NotaDeCataBodega"].ToString();
-                vino.precioARS = Convert.ToSingle(fila["NotaDeCataBodega"].ToString());
+                if (!string.IsNullOrEmpty(fila["notaDeCataBodega"].ToString())) 
+                    vino.notaDeCataBodega = fila["notaDeCataBodega"].ToString();
+                vino.precioARS = Convert.ToSingle(fila["precioARS"]);
                 vino.varietal = varietalRepositorio.ObtenerVarietal(
-                    Convert.ToInt32(fila["VarietalId"].ToString()), tipoUvaRepositorio);
-                vino.maridaje = maridajeRepositorio.ObtenerMaridaje(fila["MaridajeNombre"].ToString());
+                    Convert.ToInt32(fila["varietalId"]), tipoUvaRepositorio);
+                vino.maridaje = maridajeRepositorio.ObtenerMaridaje(fila["maridajeNombre"].ToString());
                 vino.bodega = bodega;
                 vinos.Add(vino);
             }
