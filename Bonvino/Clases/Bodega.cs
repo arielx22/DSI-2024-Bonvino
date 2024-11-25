@@ -42,7 +42,7 @@ namespace Bonvino.Clases
 
         public void setDatosVino(VinoActualizacion infoVinoImportado, Vino vinoAActualizar)
         {
-            vinoAActualizar.fechaActualizacion = DateTime.Now;
+            vinoAActualizar.fechaActualizacion = DateTime.Now.Date;
             vinoAActualizar.imagenEtiqueta = infoVinoImportado.imagenEtiqueta;
             vinoAActualizar.precioARS = infoVinoImportado.precioARS;
             vinoAActualizar.notaDeCataBodega = infoVinoImportado.notaDeCataBodega;

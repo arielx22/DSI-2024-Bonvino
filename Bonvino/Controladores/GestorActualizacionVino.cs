@@ -143,24 +143,32 @@ namespace Bonvino.Controladores
             foreach (var infoVinoImportado in infoVinosImportados)
             {
                 var vinoBuscado = determinarVinoAActualizar(infoVinoImportado, vinosBD);
-                if (vinoBuscado != null)
+                if (vinoBuscado != null && (vinoBuscado.precioARS!=infoVinoImportado.precioARS ||
+                    vinoBuscado.notaDeCataBodega!=infoVinoImportado.notaDeCataBodega || 
+                    vinoBuscado.maridaje.nombre!=infoVinoImportado.maridaje || 
+                    vinoBuscado.varietal.porcentajeComposicion != infoVinoImportado.varietal.porcentajeComposicion ||
+                    vinoBuscado.varietal.descripcion != infoVinoImportado.varietal.descripcion ||
+                    vinoBuscado.varietal.tipoUva.nombre != infoVinoImportado.varietal.tipoUva.nombre
+                    ))
                 {
                     actualizarVinoExistente(infoVinoImportado, vinoBuscado);
+                    vinoRepositorio.ActualizarVino(vinoBuscado, varietalRepositorio);
                     nombreVinos.Add(vinoBuscado.nombre);
                     añadaVinos.Add(vinoBuscado.añada);
                     vinos.Add(vinoBuscado);
+                    i++;
                 }
-                else
+                if(vinoBuscado==null)
                 {
                     vinos.Add(crearVino(infoVinoImportado));
                     nombreVinos.Add(vinos[i].nombre);
                     añadaVinos.Add(vinos[i].añada);
+                    i++;
                 }
-                i++;
+                
             }
             bodegaElegida.fechaUltimaActualizacion = DateTime.Now;
             pantallaAtualizacionVino.mostrarResumenVinosImportados(vinos);
-
         }
         public Vino determinarVinoAActualizar(VinoActualizacion infoVinoImportado, List<Vino> vinosBD)
         {
@@ -177,6 +185,7 @@ namespace Bonvino.Controladores
                 vinoCrear.añada,vinoCrear.notaDeCataBodega,
                 vinoCrear.precioARS,vinoCrear.varietal.descripcion,
                 vinoCrear.varietal.porcentajeComposicion, bodegaElegida);
+            vinoRepositorio.RegistrarVino(vino, varietalRepositorio);
             return vino;
         }
         public Maridaje buscarMaridaje(string nombre) {
@@ -285,7 +294,7 @@ namespace Bonvino.Controladores
                 },
                 varietal = new Varietal()
                 {
-                    porcentajeComposicion = 0.67,
+                    porcentajeComposicion = 0.67f,
                     tipoUva = new TipoUva()
                     {
                         nombre = "Malbec"
@@ -305,7 +314,7 @@ namespace Bonvino.Controladores
                 },
                 varietal = new Varietal()
                 {
-                    porcentajeComposicion = 0.65,
+                    porcentajeComposicion = 0.65f,
                     tipoUva = new TipoUva()
                     {
                         nombre = "Malbec"
@@ -325,7 +334,7 @@ namespace Bonvino.Controladores
                 },
                 varietal = new Varietal()
                 {
-                    porcentajeComposicion = 0.65,
+                    porcentajeComposicion = 0.65f,
                     tipoUva = new TipoUva()
                     {
                         nombre = "Malbec"
@@ -345,7 +354,7 @@ namespace Bonvino.Controladores
                 },
                 varietal = new Varietal()
                 {
-                    porcentajeComposicion = 0.70,
+                    porcentajeComposicion = 0.70f,
                     tipoUva = new TipoUva()
                     {
                         nombre = "Malbec"
@@ -365,7 +374,7 @@ namespace Bonvino.Controladores
                 },
                 varietal = new Varietal()
                 {
-                    porcentajeComposicion = 0.75,
+                    porcentajeComposicion = 0.75f,
                     tipoUva = new TipoUva()
                     {
                         nombre = "Malbec"
@@ -385,7 +394,7 @@ namespace Bonvino.Controladores
                 },
                 varietal = new Varietal()
                 {
-                    porcentajeComposicion = 0.72,
+                    porcentajeComposicion = 0.72f,
                     tipoUva = new TipoUva()
                     {
                         nombre = "Malbec"

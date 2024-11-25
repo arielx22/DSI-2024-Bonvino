@@ -12,13 +12,14 @@ namespace Bonvino.Clases
         public Vino() { }
         public Vino(Maridaje maridaje,TipoUva tipoUva, string nombre, int añada, 
             string notaDeCataBodega, float precioARS, string descripcion,
-            double porcentajeComposicion, Bodega bodega) {
+            float porcentajeComposicion, Bodega bodega) {
             this.maridaje = maridaje;
             this.nombre = nombre;
             this.añada = añada;
             this.notaDeCataBodega = notaDeCataBodega;
             this.precioARS = precioARS;
             this.bodega = bodega;
+            this.fechaActualizacion = DateTime.Now.Date;
             crearVarietal(tipoUva, descripcion, porcentajeComposicion);
         }
         public int añada { get; set; }
@@ -30,7 +31,7 @@ namespace Bonvino.Clases
         public Varietal varietal { get; set; }
         public Maridaje maridaje { get; set; }
         public Bodega bodega { get; set; }
-        public void crearVarietal(TipoUva tipoUva, string descripcion, double porcentajeComposicion)
+        public void crearVarietal(TipoUva tipoUva, string descripcion, float porcentajeComposicion)
         {
             this.varietal = new Varietal(tipoUva, descripcion, porcentajeComposicion);
         }
@@ -38,6 +39,7 @@ namespace Bonvino.Clases
         public Vino sosEsteVino(VinoActualizacion vinoImportado)
         {
             if (this.nombre == vinoImportado.nombre && this.añada == vinoImportado.añada) return this;
+          
             return null;
         }
         public bool sosVinoAActualizar(string nombre, int añada)

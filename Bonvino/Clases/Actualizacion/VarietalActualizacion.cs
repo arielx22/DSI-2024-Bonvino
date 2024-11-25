@@ -10,7 +10,7 @@ namespace Bonvino.Clases.Actualizacion
     {
         public VarietalActualizacion() { }
         public string descripcion { get; set; }
-        public double porcentajeComposicion { get; set; }
+        public float porcentajeComposicion { get; set; }
         public TipoUvaActualizacion tipoUva { get; set; }
     }
 }

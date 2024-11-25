@@ -29,7 +29,8 @@ namespace Bonvino.Boundarys
                     "fresas maduras y delicadas notas florales",
                     varietal = new VarietalActualizacion
                     {
-                        porcentajeComposicion = 0.60,
+                        porcentajeComposicion = 0.60f,
+                        descripcion = "Catena Pinot Noir",
                         tipoUva = new TipoUvaActualizacion()
                         {
                             nombre = "Pinot Noir"
@@ -47,7 +48,8 @@ namespace Bonvino.Boundarys
                     "toque de roble.",
                     varietal = new VarietalActualizacion
                     {
-                        porcentajeComposicion = 0.67,
+                        porcentajeComposicion = 0.67f,
+                        descripcion = "Catena Malbec",
                         tipoUva = new TipoUvaActualizacion()
                         {
                             nombre = "Malbec"
@@ -64,7 +66,8 @@ namespace Bonvino.Boundarys
                     notaDeCataBodega = "Frutos frescos y un matiz especiado.",
                     varietal = new VarietalActualizacion
                     {
-                        porcentajeComposicion = 0.65,
+                        porcentajeComposicion = 0.65f,
+                        descripcion = "Cantena Chardonnay",
                         tipoUva = new TipoUvaActualizacion()
                         {
                             nombre = "Chardonnay"
@@ -84,7 +87,8 @@ namespace Bonvino.Boundarys
                     "taninos suaves y persistentes.",
                     varietal = new VarietalActualizacion
                     {
-                        porcentajeComposicion = 0.70,
+                        descripcion = "Maridaje de Excelencia",
+                        porcentajeComposicion = 0.70f,
                         tipoUva = new TipoUvaActualizacion()
                         {
                             nombre = "Cabernet Sauvignon"
@@ -102,7 +106,8 @@ namespace Bonvino.Boundarys
                     "un final suave y persistente toque de roble.",
                     varietal = new VarietalActualizacion
                     {
-                        porcentajeComposicion = 0.66,
+                        descripcion = "Vinos y Sabores",
+                        porcentajeComposicion = 0.66f,
                         tipoUva = new TipoUvaActualizacion()
                         {
                             nombre = "Garnacha"
@@ -120,7 +125,8 @@ namespace Bonvino.Boundarys
                     "con un final fresco y elegante.",
                     varietal = new VarietalActualizacion
                     {
-                        porcentajeComposicion = 0.60,
+                        descripcion = "Norton Reserva",
+                        porcentajeComposicion = 0.60f,
                         tipoUva = new TipoUvaActualizacion()
                         {
                             nombre = "Malbec"

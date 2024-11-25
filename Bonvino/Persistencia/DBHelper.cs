@@ -88,7 +88,7 @@ namespace Bonvino.Pesistecia
         ///     Se utiliza para sentencias SQL del tipo “Insert/Update/Delete”. Recibe por valor una sentencia sql como string
         /// Devuelve:
         ///      un valor entero con el número de filas afectadas por la sentencia ejecutada
-        public int EjecutarSQL1(string strSql)
+        public int EjecutarSQL(string strSql)
         {
             int afectadas = 0;
             SqlConnection cnn = new SqlConnection();
@@ -101,20 +101,6 @@ namespace Bonvino.Pesistecia
             afectadas = cmd.ExecuteNonQuery();
             this.CloseConnection(cnn);
             return afectadas;
-        }
-        public void EjecutarSQL(string strSql)
-        {
-            int afectadas = 0;
-            SqlConnection cnn = new SqlConnection();
-            SqlCommand cmd = new SqlCommand();
-            cnn.ConnectionString = cadenaDeConexion;
-            cnn.Open();
-            cmd.Connection = cnn;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = strSql;
-            afectadas = cmd.ExecuteNonQuery();
-            this.CloseConnection(cnn);
-            //return afectadas;
         }
 
         public void Conectar()
@@ -172,7 +158,6 @@ namespace Bonvino.Pesistecia
 
             //devuelve el valor calculado a través de la función
             return tabla;
-
         }
     }
 }

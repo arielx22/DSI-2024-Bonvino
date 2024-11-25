@@ -40,5 +40,25 @@ namespace Bonvino.Pesistecia.Repositorio
             }
             return vinos;
         }
+ 
+        public void RegistrarVino(Vino vino, VarietalRepositorio varietalRepositorio)
+        {
+            varietalRepositorio.RegistrarVarietal(vino.varietal);
+            var sentenciaSql = $"INSERT INTO Vino(añada, nombre, fechaActualizacion, precioARS, varietalId, maridajeNombre, bodegaNombre,notaDeCataBodega)" +
+                $"VALUES({vino.añada}, '{vino.nombre}', '{vino.fechaActualizacion.ToString("dd-MM-yyyy")}', " +
+                $"{vino.precioARS}, {varietalRepositorio.ObtenerVarietalId()}, '{vino.maridaje.nombre}'," +
+                $" '{vino.bodega.nombre}', '{vino.notaDeCataBodega}')";
+            DBHelper.GetDBHelper().EjecutarSQL(sentenciaSql);
+        }
+
+        public void ActualizarVino(Vino vino, VarietalRepositorio varietalRepositorio)
+        {
+            //varietalId={varietalRepositorio.ObtenerVarietalId()} esta mal esto esta siempre actualizando siempre con el ultimo varietal de la BD
+            var sentenciaSql = $"UPDATE Vino SET fechaActualizacion='{vino.fechaActualizacion.ToString("dd-MM-yyyy")}'," +
+                $"precioARS='{vino.precioARS}', varietalId={varietalRepositorio.ObtenerVarietalId()}, " +
+                $"maridajeNombre ='{vino.maridaje.nombre}', bodegaNombre= '{vino.bodega.nombre}', notaDeCataBodega='{vino.notaDeCataBodega}'" +
+                $"WHERE nombre ='{vino.nombre}' and añada={vino.añada}";
+            DBHelper.GetDBHelper().EjecutarSQL(sentenciaSql);
+        }
     }
 }
