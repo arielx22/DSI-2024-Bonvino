@@ -30,7 +30,7 @@ namespace Bonvino.Boundarys
             MessageBox.Show(nombresEnofilos.ToString(), "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }*/
         public void notificarNovedadVinosBodega( string bodega, List<string> vinos, List<int> añadas, List<float> preciosARS, List<string> maridajes, 
-            List<float> varietales, List<string> tiposUva, List<string> noatasDeCata, string usuario)
+            List<float> varietales, List<string> tiposUva, List<string> notasDeCata, string usuario)
         {
             StringBuilder mensaje = new StringBuilder();
 
@@ -69,9 +69,9 @@ namespace Bonvino.Boundarys
                 }
 
                 // Nota de cata de bodega
-                if (noatasDeCata != null && noatasDeCata.Count > i)
+                if (notasDeCata != null && notasDeCata.Count > i)
                 {
-                    mensaje.AppendLine($"  Nota de Cata Bodega: {(string.IsNullOrEmpty(noatasDeCata[i]) ? "Sin nota de cata" : noatasDeCata[i])}");
+                    mensaje.AppendLine($"  Nota de Cata Bodega: {(string.IsNullOrEmpty(notasDeCata[i]) ? "Sin nota de cata" : notasDeCata[i])}");
                 }
                 
             }

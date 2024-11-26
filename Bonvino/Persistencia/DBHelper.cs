@@ -27,9 +27,9 @@ namespace Bonvino.Pesistecia
 
         private DBHelper()
         {
-            cadenaDeConexion = "Data Source=DESKTOP-SIADRTK\\SQLEXPRESS01;Initial Catalog=Bonvino;Integrated Security=True";
+            cadenaDeConexion = "Data Source=MAURO\\SQLEXPRESS;Initial Catalog=Bonvino;Integrated Security=True";
             //cadenaDeConexion = "Data Source=DESKTOP-5NEAKLH;Initial Catalog=PRUEBA;Integrated Security=True";
-            //cadenaDeConexion = "Data Source=200.69.137.167,11333;Initial Catalog=PAV-3K2-10-AEROLINEA;User ID=PAV-3K2-10-USER;Password=77edc00a99fe";
+            //cadenaDeConexion = "Data Source=MAURO\\SQLEXPRESS;Initial Catalog=Bonvino;User ID=mauro;Password=77edc00a99fe";
         }
 
         public static DBHelper GetDBHelper()
