@@ -20,7 +20,7 @@ namespace Bonvino.Controladores
         private List<VinoActualizacion> infoVinosImportados;
         private List<Enofilo> enofilosSeguidoresDeBodega;
         private List<string> usuarios;
-        public List<Vino> vinos { get; set; }
+        private List<Vino> vinos;
         private List<string> nombreVinos;
         private List<int> añadaVinos;
 
@@ -29,6 +29,7 @@ namespace Bonvino.Controladores
         private List<float> varietalVinos;
         private List<string> tipoUvaVinos;
         private List<string> notaDeCataVinos;
+
         //implementación del atributo elementos de ISujeto
         public List<IObserverNotificacionVinosBodega> elementos { get; set; }
 
@@ -56,7 +57,6 @@ namespace Bonvino.Controladores
             varietalVinos = new List<float>();
             tipoUvaVinos = new List<string>();
             notaDeCataVinos = new List<string>();
-
 
             bodegaRepositorio = new BodegaRepositorio();
             vinoRepositorio = new VinoRepositorio();
@@ -90,7 +90,7 @@ namespace Bonvino.Controladores
                 if (bodega.esActualizable(fechaActual))
                 {
                     bodegas.Add(bodega);
-                    bodegas[i].nombre = bodega.nombre;
+                    bodegas[i].setNombre(bodega.getNombre());
                     i++;
                 }
             }
@@ -162,20 +162,20 @@ namespace Bonvino.Controladores
             foreach (var infoVinoImportado in infoVinosImportados)
             {
                 var vinoBuscado = determinarVinoAActualizar(infoVinoImportado, vinosBD);
-                if (vinoBuscado != null && (vinoBuscado.precioARS!=infoVinoImportado.precioARS ||
-                    vinoBuscado.notaDeCataBodega!=infoVinoImportado.notaDeCataBodega))
+                if (vinoBuscado != null && (vinoBuscado.getPrecioARS()!=infoVinoImportado.precioARS ||
+                    vinoBuscado.getNotaDeCataBodega()!=infoVinoImportado.notaDeCataBodega))
                 {
                     actualizarVinoExistente(infoVinoImportado, vinoBuscado);
                     vinoRepositorio.ActualizarVino(vinoBuscado);
-                    nombreVinos.Add(vinoBuscado.nombre);
-                    añadaVinos.Add(vinoBuscado.añada);
-                    precioARSVinos.Add(vinoBuscado.precioARS);
+                    nombreVinos.Add(vinoBuscado.getNombre());
+                    añadaVinos.Add(vinoBuscado.getAñada());
+                    precioARSVinos.Add(vinoBuscado.getPrecioARS());
                     
-                    maridajeVinos.Add(vinoBuscado.maridaje.nombre);
-                    varietalVinos.Add(vinoBuscado.varietal.porcentajeComposicion);
-                    tipoUvaVinos.Add(vinoBuscado.varietal.tipoUva.nombre);
+                    maridajeVinos.Add(vinoBuscado.getMaridaje().getNombre());
+                    varietalVinos.Add(vinoBuscado.getVarietal().getPorcentajeComposicion());
+                    tipoUvaVinos.Add(vinoBuscado.getVarietal().getTipoUva().getNombre());
 
-                    notaDeCataVinos.Add(vinoBuscado.notaDeCataBodega);
+                    notaDeCataVinos.Add(vinoBuscado.getNotaDeCataBodega());
 
                     vinos.Add(vinoBuscado);
                     i++;
@@ -183,20 +183,20 @@ namespace Bonvino.Controladores
                 if(vinoBuscado==null)
                 {
                     vinos.Add(crearVino(infoVinoImportado));
-                    nombreVinos.Add(vinos[i].nombre);
-                    añadaVinos.Add(vinos[i].añada);
-                    precioARSVinos.Add(vinos[i].precioARS);
+                    nombreVinos.Add(vinos[i].getNombre());
+                    añadaVinos.Add(vinos[i].getAñada());
+                    precioARSVinos.Add(vinos[i].getPrecioARS());
 
-                    maridajeVinos.Add(vinos[i].maridaje.nombre);
-                    varietalVinos.Add(vinos[i].varietal.porcentajeComposicion);
-                    tipoUvaVinos.Add(vinos[i].varietal.tipoUva.nombre);
+                    maridajeVinos.Add(vinos[i].getMaridaje().getNombre());
+                    varietalVinos.Add(vinos[i].getVarietal().getPorcentajeComposicion());
+                    tipoUvaVinos.Add(vinos[i].getVarietal().getTipoUva().getNombre());
 
-                    notaDeCataVinos.Add(vinos[i].notaDeCataBodega);
+                    notaDeCataVinos.Add(vinos[i].getNotaDeCataBodega());
                     i++;
                 }
                 
             }
-            bodegaElegida.fechaUltimaActualizacion = DateTime.Now;
+            bodegaElegida.setFechaUltimaActualizacion(DateTime.Now);
             pantallaAtualizacionVino.mostrarResumenVinosImportados(vinos);
         }
         public Vino determinarVinoAActualizar(VinoActualizacion infoVinoImportado, List<Vino> vinosBD)
@@ -245,7 +245,7 @@ namespace Bonvino.Controladores
                 if (enofilo.SeguisABodega(bodegaElegida)) {
                     //hace un atributo de array para los usuarios
                     enofilosSeguidoresDeBodega.Add(enofilo);
-                    usuarios.Add(enofilo.usuario.nombre);        
+                    usuarios.Add(enofilo.getUsuario().getNombre());        
                 }      
             }
         }
@@ -265,7 +265,7 @@ namespace Bonvino.Controladores
         { 
             foreach (var usuario in usuarios)
             {
-                elementos[0].notificarNovedadVinosBodega(bodegaElegida.nombre, nombreVinos, añadaVinos,precioARSVinos, maridajeVinos, 
+                elementos[0].notificarNovedadVinosBodega(bodegaElegida.getNombre(), nombreVinos, añadaVinos,precioARSVinos, maridajeVinos, 
                     varietalVinos, tipoUvaVinos,notaDeCataVinos,usuario);
             }
 

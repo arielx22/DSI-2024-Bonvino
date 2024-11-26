@@ -16,13 +16,13 @@ namespace Bonvino.Persistencia.Repositorio
             UsuarioRepositorio usuarioRepositorio)
         {
             List<Enofilo> enofilos = new List<Enofilo>();
-            var sentenciaSql = $"SELECT * FROM Siguiendo WHERE bodegaNombre like '{bodega.nombre}' and " +
+            var sentenciaSql = $"SELECT * FROM Siguiendo WHERE bodegaNombre like '{bodega.getNombre()}' and " +
                 $"fechaFin is null";
             var tabla = DBHelper.GetDBHelper().ConsultaSQL(sentenciaSql);
             foreach (DataRow fila in tabla.Rows)
             {
                 var siguiendo = new Siguiendo();
-                siguiendo.bodegaME = bodega;
+                siguiendo.setBodega(bodega);
                 var enofilo = enofiloRepositorio.ObtenerEnofilo(Convert.ToInt32(fila["id"].ToString()),
                     siguiendo, usuarioRepositorio);
                 enofilos.Add(enofilo);

@@ -18,9 +18,9 @@ namespace Bonvino.Pesistecia.Repositorio
             if (tabla.Rows.Count > 0)
             {
                 var fila = tabla.Rows[0];
-                maridaje.nombre = fila["Nombre"].ToString();
+                maridaje.setNombre(fila["Nombre"].ToString());
                 if (!string.IsNullOrEmpty(fila["Descripcion"].ToString()))
-                    maridaje.descripcion = fila["Descripcion"].ToString();
+                    maridaje.setDescripcion(fila["Descripcion"].ToString());
             }
             return maridaje;
         }
@@ -32,9 +32,9 @@ namespace Bonvino.Pesistecia.Repositorio
             foreach (DataRow fila in tabla.Rows)
             {
                 var maridaje = new Maridaje();
-                maridaje.nombre = fila["nombre"].ToString();
+                maridaje.setNombre(fila["nombre"].ToString());
                 if(!string.IsNullOrEmpty(fila["descripcion"].ToString()))
-                    maridaje.descripcion = fila["descripcion"].ToString();
+                    maridaje.setDescripcion(fila["descripcion"].ToString());
                 maridajes.Add(maridaje);
             }
             return maridajes;

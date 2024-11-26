@@ -11,12 +11,12 @@ namespace Bonvino.Boundarys
     public class InterfazAPIBodega
     {
         public InterfazAPIBodega() { }
-        
+
         public List<VinoActualizacion> getNovedades(Bodega bodegaElegida)
         {
             List<VinoActualizacion> actualizaciones = new List<VinoActualizacion>();
 
-            if (bodegaElegida.nombre == "Bodega Catena Zapata")
+            if (bodegaElegida.getNombre() == "Bodega Catena Zapata")
             {
 
                 actualizaciones.Add(new VinoActualizacion
@@ -75,7 +75,7 @@ namespace Bonvino.Boundarys
                     }
                 });
             }
-            if (bodegaElegida.nombre== "Bodega Norton")
+            if (bodegaElegida.getNombre() == "Bodega Norton")
             {
                 actualizaciones.Add(new VinoActualizacion
                 {
@@ -132,9 +132,9 @@ namespace Bonvino.Boundarys
                             nombre = "Malbec"
                         }
                     }
-                });           
+                });
             }
-            if (bodegaElegida.nombre == "Weingut Dr. Loosen")
+            if (bodegaElegida.getNombre() == "Weingut Dr. Loosen")
             {
                 actualizaciones.Add(new VinoActualizacion
                 {
@@ -153,7 +153,7 @@ namespace Bonvino.Boundarys
                             nombre = "Cabernet Sauvignon"
                         }
                     }
-                });   
+                });
             }
 
             return actualizaciones;

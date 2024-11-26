@@ -9,10 +9,22 @@ namespace Bonvino.Clases
 {
     public class Vino
     {
+        private int añada;
+        private DateTime fechaActualizacion;
+        private byte[] imagenEtiqueta;
+        private string nombre;
+        private string notaDeCataBodega;
+        private float precioARS;
+        private Varietal varietal;
+        private Maridaje maridaje;
+        private Bodega bodega;
+
         public Vino() { }
-        public Vino(Maridaje maridaje,TipoUva tipoUva, string nombre, int añada, 
-            string notaDeCataBodega, float precioARS, string descripcion,
-            float porcentajeComposicion, Bodega bodega) {
+
+        public Vino(Maridaje maridaje, TipoUva tipoUva, string nombre, int añada,
+                    string notaDeCataBodega, float precioARS, string descripcion,
+                    float porcentajeComposicion, Bodega bodega)
+        {
             this.maridaje = maridaje;
             this.nombre = nombre;
             this.añada = añada;
@@ -22,20 +34,101 @@ namespace Bonvino.Clases
             this.fechaActualizacion = DateTime.Now.Date;
             crearVarietal(tipoUva, descripcion, porcentajeComposicion);
         }
-        public int añada { get; set; }
-        public DateTime fechaActualizacion { get; set; }
-        public byte[] imagenEtiqueta { get; set; }
-        public string nombre { get; set; }
-        public string notaDeCataBodega { get; set; }
-        public float precioARS { get; set; }
-        public Varietal varietal { get; set; }
-        public Maridaje maridaje { get; set; }
-        public Bodega bodega { get; set; }
-        public void crearVarietal(TipoUva tipoUva, string descripcion, float porcentajeComposicion)
+
+        public int getAñada()
+        {
+            return añada;
+        }
+
+        public void setAñada(int añada)
+        {
+            this.añada = añada;
+        }
+
+        public DateTime getFechaActualizacion()
+        {
+            return fechaActualizacion;
+        }
+
+        public void setFechaActualizacion(DateTime fechaActualizacion)
+        {
+            this.fechaActualizacion = fechaActualizacion;
+        }
+
+        public byte[] getImagenEtiqueta()
+        {
+            return imagenEtiqueta;
+        }
+
+        public void setImagenEtiqueta(byte[] imagenEtiqueta)
+        {
+            this.imagenEtiqueta = imagenEtiqueta;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
+        }
+
+        public void setNombre(string nombre)
+        {
+            this.nombre = nombre;
+        }
+
+        public string getNotaDeCataBodega()
+        {
+            return notaDeCataBodega;
+        }
+
+        public void setNotaDeCataBodega(string notaDeCataBodega)
+        {
+            this.notaDeCataBodega = notaDeCataBodega;
+        }
+
+        public float getPrecioARS()
+        {
+            return precioARS;
+        }
+
+        public void setPrecioARS(float precioARS)
+        {
+            this.precioARS = precioARS;
+        }
+
+        public Varietal getVarietal()
+        {
+            return varietal;
+        }
+
+        public void setVarietal(Varietal varietal)
+        {
+            this.varietal = varietal;
+        }
+
+        public Maridaje getMaridaje()
+        {
+            return maridaje;
+        }
+
+        public void setMaridaje(Maridaje maridaje)
+        {
+            this.maridaje = maridaje;
+        }
+
+        public Bodega getBodega()
+        {
+            return bodega;
+        }
+
+        public void setBodega(Bodega bodega)
+        {
+            this.bodega = bodega;
+        }
+
+        private void crearVarietal(TipoUva tipoUva, string descripcion, float porcentajeComposicion)
         {
             this.varietal = new Varietal(tipoUva, descripcion, porcentajeComposicion);
         }
-
         public Vino sosEsteVino(VinoActualizacion vinoImportado)
         {
             if (this.nombre == vinoImportado.nombre && this.añada == vinoImportado.añada) return this;

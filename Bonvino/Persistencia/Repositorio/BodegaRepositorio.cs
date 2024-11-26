@@ -18,11 +18,11 @@ namespace Bonvino.Pesistecia.Repositorio
             foreach (DataRow fila in tabla.Rows)
             {
                 var bodega = new Bodega();
-                bodega.nombre = fila["nombre"].ToString();
-                if (!string.IsNullOrEmpty(fila["historia"].ToString())) bodega.historia = fila["historia"].ToString();
-                if (!string.IsNullOrEmpty(fila["descripcion"].ToString())) bodega.descripcion = fila["descripcion"].ToString();
-                bodega.periodoActualizacion = Convert.ToInt32(fila["periodoActualizacion"]);
-                bodega.fechaUltimaActualizacion = Convert.ToDateTime(fila["fechaUltimaActualizacion"]);
+                bodega.setNombre(fila["nombre"].ToString());
+                if (!string.IsNullOrEmpty(fila["historia"].ToString())) bodega.setHistoria(fila["historia"].ToString());
+                if (!string.IsNullOrEmpty(fila["descripcion"].ToString())) bodega.setDescripcion(fila["descripcion"].ToString());
+                bodega.setPeriodoActualizacion(Convert.ToInt32(fila["periodoActualizacion"]));
+                bodega.setFechaUltimaActualizacion(Convert.ToDateTime(fila["fechaUltimaActualizacion"]));
                 if (fila["CoordenadasUbicacionEnX"] != DBNull.Value && fila["CoordenadasUbicacionEnY"] != DBNull.Value)
                 {
                     // Convertir las coordenadas en float y agregarlas a la lista
@@ -30,7 +30,7 @@ namespace Bonvino.Pesistecia.Repositorio
                     float coordenadaY = Convert.ToSingle(fila["CoordenadasUbicacionEnY"]);
 
                     // Crear la lista de coordenadas y asignarla a la propiedad de la bodega
-                    bodega.coordenadasUbicacion = new List<float> { coordenadaX, coordenadaY };
+                    bodega.setCoordenadasUbicacion(new List<float> { coordenadaX, coordenadaY });
                 }
                 bodegas.Add(bodega);
             }

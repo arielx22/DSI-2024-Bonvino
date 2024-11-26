@@ -44,13 +44,13 @@ namespace Bonvino
             this.bodegas = bodegas;
             foreach (var bodega in this.bodegas)
             {
-                dgvBodegas.Rows.Add(bodega.nombre);
+                dgvBodegas.Rows.Add(bodega.getNombre());
             }
             dgvBodegas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
         private void seleccionBodega(object sender, EventArgs e)
         {
-            bodegaElegida.nombre = dgvBodegas.CurrentCell.Value.ToString();
+            bodegaElegida.setNombre(dgvBodegas.CurrentCell.Value.ToString());
             gestor.seleccionBodega(bodegaElegida, this);
         }
         public void mostrarResumenVinosImportados(List<Vino> vinosResumen)
@@ -59,14 +59,14 @@ namespace Bonvino
             foreach (var vino in vinosResumen)
             {
                 var fila = new string[] {
-                    bodegaElegida.nombre,
-                    vino.nombre,
-                    vino.añada.ToString(),
-                    vino.precioARS.ToString(),
-                    vino.maridaje.nombre.ToString(),
-                    vino.varietal.porcentajeComposicion.ToString(),
-                    vino.varietal.tipoUva.nombre,
-                    vino.notaDeCataBodega
+                    bodegaElegida.getNombre(),
+                    vino.getNombre(),
+                    vino.getAñada().ToString(),
+                    vino.getPrecioARS().ToString(),
+                    vino.getMaridaje().getNombre().ToString(),
+                    vino.getVarietal().getPorcentajeComposicion().ToString(),
+                    vino.getVarietal().getTipoUva().getNombre(),
+                    vino.getNotaDeCataBodega()
                 };
                 dgvResumenVinos.Rows.Add(fila);
             }

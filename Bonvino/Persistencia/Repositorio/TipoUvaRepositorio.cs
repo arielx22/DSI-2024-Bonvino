@@ -18,9 +18,9 @@ namespace Bonvino.Pesistecia.Repositorio
             if (tabla.Rows.Count > 0)
             {
                 var fila = tabla.Rows[0];
-                tipoUva.nombre = fila["nombre"].ToString();
+                tipoUva.setNombre(fila["nombre"].ToString());
                 if (!string.IsNullOrEmpty(fila["descripcion"].ToString())) 
-                    tipoUva.descripcion = fila["descripcion"].ToString();
+                    tipoUva.setDescripcion(fila["descripcion"].ToString());
             }
             return tipoUva;
         }
@@ -32,9 +32,9 @@ namespace Bonvino.Pesistecia.Repositorio
             foreach (DataRow fila in tabla.Rows)
             {
                 var tipoUva = new TipoUva();
-                tipoUva.nombre = fila["nombre"].ToString();
+                tipoUva.setNombre(fila["nombre"].ToString());
                 if (!string.IsNullOrEmpty(fila["descripcion"].ToString()))
-                    tipoUva.descripcion = fila["descripcion"].ToString();
+                    tipoUva.setDescripcion(fila["descripcion"].ToString());
                 tiposUva.Add(tipoUva);
             }
             return tiposUva;

@@ -18,12 +18,12 @@ namespace Bonvino.Pesistecia.Repositorio
             if (tabla.Rows.Count > 0)
             {
                 var fila = tabla.Rows[0];
-                enofilo.nombre = fila["Nombre"].ToString();
-                enofilo.apellido = fila["Apellido"].ToString();
+                enofilo.setNombre(fila["Nombre"].ToString());
+                enofilo.setApellido(fila["Apellido"].ToString());
                 var siguiendos = new List<Siguiendo>();
                 siguiendos.Add(siguiendo);
-                enofilo.siguiendoList = siguiendos;
-                enofilo.usuario = usuarioRepositorio.ObtenerUsuario(fila["nombreUsuario"].ToString());
+                enofilo.setSiguiendo(siguiendos);
+                enofilo.setUsuario(usuarioRepositorio.ObtenerUsuario(fila["nombreUsuario"].ToString()));
             }
             return enofilo;
         }

@@ -18,9 +18,9 @@ namespace Bonvino.Pesistecia.Repositorio
             if (tabla.Rows.Count > 0)
             {
                 var fila = tabla.Rows[0];
-                usuario.nombre = nombre;
-                usuario.contraseña = fila["contraseña"].ToString();
-                usuario.premium = fila["premium"].ToString() == "0" ? false : true;
+                usuario.setNombre(nombre);
+                usuario.setContraseña(fila["contraseña"].ToString());
+                usuario.setPremium(fila["premium"].ToString() == "0" ? false : true);
             }
             return usuario;
         }

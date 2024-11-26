@@ -20,18 +20,16 @@ namespace Bonvino.Pesistecia.Repositorio
             if (tabla.Rows.Count > 0)
             {
                 var fila = tabla.Rows[0];
-                varietal.descripcion = fila["descripcion"].ToString();
-                varietal.porcentajeComposicion = Convert.ToSingle(fila["porcentajeComposicion"]);
-                varietal.tipoUva = tipoUvaRepositorio.ObtenerTipoUva(fila["tipoUvaNombre"].ToString());
-                
-
+                varietal.setDescripcion(fila["descripcion"].ToString());
+                varietal.setPorcentajeComposicion(Convert.ToSingle(fila["porcentajeComposicion"]));
+                varietal.setTipoUva(tipoUvaRepositorio.ObtenerTipoUva(fila["tipoUvaNombre"].ToString()));
             }
             return varietal;
         }
         public void RegistrarVarietal(Varietal varietal)
         {
             var sentenciaSql = $"INSERT INTO Varietal(descripcion, porcentajeComposicion, tipoUvaNombre) " +
-                $"VALUES('{varietal.descripcion}', {varietal.porcentajeComposicion.ToString("0.##", CultureInfo.InvariantCulture)}, '{varietal.tipoUva.nombre}')";
+                $"VALUES('{varietal.getDescripcion()}', {varietal.getPorcentajeComposicion().ToString("0.##", CultureInfo.InvariantCulture)}, '{varietal.getTipoUva().getNombre()}')";
             DBHelper.GetDBHelper().EjecutarSQL(sentenciaSql);
         }
         public int ObtenerVarietalId()

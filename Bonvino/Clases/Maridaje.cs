@@ -8,9 +8,28 @@ namespace Bonvino.Clases
 {
     public class Maridaje
     {
+        private string descripcion;
+        private string nombre;
         public Maridaje() { }
-        public string descripcion {  get; set; }
-        public string nombre { get; set; }
+        public string getDescripcion()
+        {
+            return descripcion;
+        }
+
+        public void setDescripcion(string descripcion)
+        {
+            this.descripcion = descripcion;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
+        }
+
+        public void setNombre(string nombre)
+        {
+            this.nombre = nombre;
+        }
 
         public bool sosMaridaje(string nombre) {
             return this.nombre == nombre;
