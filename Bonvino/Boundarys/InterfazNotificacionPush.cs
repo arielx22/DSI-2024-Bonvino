@@ -29,7 +29,8 @@ namespace Bonvino.Boundarys
 
             MessageBox.Show(nombresEnofilos.ToString(), "Notificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }*/
-        public void notificarNovedadVinoBodega(string bodega,List<string> vino, List<int> añada, string usuario)
+        public void notificarNovedadVinosBodega( string bodega, List<string> vinos, List<int> añadas, List<float> preciosARS, List<string> maridajes, 
+            List<float> varietales, List<string> tiposUva, List<string> noatasDeCata, string usuario)
         {
             StringBuilder mensaje = new StringBuilder();
 
@@ -40,17 +41,44 @@ namespace Bonvino.Boundarys
             mensaje.AppendLine($"Bodega: {bodega}");
 
             // Listado de vinos y añadas
-            mensaje.AppendLine("Vinos y añada:");
-            for (int i = 0; i < vino.Count; i++)
+            mensaje.AppendLine("Vinos y añadas:");
+            for (int i = 0; i < vinos.Count; i++)
             {
-                mensaje.AppendLine($"- {vino[i]} (Añada: {añada[i]})");
+                mensaje.AppendLine($"- {vinos[i]} (Añada: {añadas[i]})");
+
+                // Precio en ARS
+                if (preciosARS != null && preciosARS.Count > i)
+                {
+                    mensaje.AppendLine($"  Precio ARS: {preciosARS[i]:0.00}"); // Mostrar precio con dos decimales
+                }
+
+                // Maridaje
+                if (maridajes != null && maridajes.Count > i)
+                {
+                    mensaje.AppendLine($"  Maridaje: {(string.IsNullOrEmpty(maridajes[i]) ? "Sin maridaje" : maridajes[i])}");
+                }
+
+                // Varietal y Tipo de Uva
+                if (varietales != null && varietales.Count > i)
+                {
+                    mensaje.AppendLine($"  Varietal: {varietales[i]:0.00}%");
+                }
+                if (tiposUva != null && tiposUva.Count > i)
+                {
+                    mensaje.AppendLine($"  Tipo de Uva: {tiposUva[i]}");
+                }
+
+                // Nota de cata de bodega
+                if (noatasDeCata != null && noatasDeCata.Count > i)
+                {
+                    mensaje.AppendLine($"  Nota de Cata Bodega: {(string.IsNullOrEmpty(noatasDeCata[i]) ? "Sin nota de cata" : noatasDeCata[i])}");
+                }
+                
             }
 
             // Mostrar la notificación en un MessageBox o consola (dependiendo del contexto)
             MessageBox.Show(mensaje.ToString(), "Notificación de Actualización de Vinos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
-
 
     }
 }

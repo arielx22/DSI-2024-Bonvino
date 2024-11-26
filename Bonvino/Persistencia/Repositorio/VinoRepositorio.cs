@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,17 +47,15 @@ namespace Bonvino.Pesistecia.Repositorio
             varietalRepositorio.RegistrarVarietal(vino.varietal);
             var sentenciaSql = $"INSERT INTO Vino(añada, nombre, fechaActualizacion, precioARS, varietalId, maridajeNombre, bodegaNombre,notaDeCataBodega)" +
                 $"VALUES({vino.añada}, '{vino.nombre}', '{vino.fechaActualizacion.ToString("dd-MM-yyyy")}', " +
-                $"{vino.precioARS}, {varietalRepositorio.ObtenerVarietalId()}, '{vino.maridaje.nombre}'," +
+                $"{vino.precioARS.ToString("0.##", CultureInfo.InvariantCulture)}, {varietalRepositorio.ObtenerVarietalId()}, '{vino.maridaje.nombre}'," +
                 $" '{vino.bodega.nombre}', '{vino.notaDeCataBodega}')";
             DBHelper.GetDBHelper().EjecutarSQL(sentenciaSql);
         }
 
-        public void ActualizarVino(Vino vino, VarietalRepositorio varietalRepositorio)
+        public void ActualizarVino(Vino vino)
         {
-            //varietalId={varietalRepositorio.ObtenerVarietalId()} esta mal esto esta siempre actualizando siempre con el ultimo varietal de la BD
             var sentenciaSql = $"UPDATE Vino SET fechaActualizacion='{vino.fechaActualizacion.ToString("dd-MM-yyyy")}'," +
-                $"precioARS='{vino.precioARS}', varietalId={varietalRepositorio.ObtenerVarietalId()}, " +
-                $"maridajeNombre ='{vino.maridaje.nombre}', bodegaNombre= '{vino.bodega.nombre}', notaDeCataBodega='{vino.notaDeCataBodega}'" +
+                $"precioARS='{vino.precioARS.ToString("0.##", CultureInfo.InvariantCulture)}', notaDeCataBodega='{vino.notaDeCataBodega}'" +
                 $"WHERE nombre ='{vino.nombre}' and añada={vino.añada}";
             DBHelper.GetDBHelper().EjecutarSQL(sentenciaSql);
         }

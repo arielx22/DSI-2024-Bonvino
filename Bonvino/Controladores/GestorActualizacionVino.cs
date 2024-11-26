@@ -23,6 +23,12 @@ namespace Bonvino.Controladores
         public List<Vino> vinos { get; set; }
         private List<string> nombreVinos;
         private List<int> añadaVinos;
+
+        private List<float> precioARSVinos;
+        private List<string> maridajeVinos;
+        private List<float> varietalVinos;
+        private List<string> tipoUvaVinos;
+        private List<string> notaDeCataVinos;
         //implementación del atributo elementos de ISujeto
         public List<IObserverNotificacionVinosBodega> elementos { get; set; }
 
@@ -41,9 +47,17 @@ namespace Bonvino.Controladores
             enofilosSeguidoresDeBodega = new List<Enofilo>();
             elementos = new List<IObserverNotificacionVinosBodega>();
             vinos = new List<Vino>();
+
             usuarios = new List<string>();
             nombreVinos = new List<string>();
             añadaVinos = new List<int>();
+            precioARSVinos = new List<float>();
+            maridajeVinos = new List<string>();
+            varietalVinos = new List<float>();
+            tipoUvaVinos = new List<string>();
+            notaDeCataVinos = new List<string>();
+
+
             bodegaRepositorio = new BodegaRepositorio();
             vinoRepositorio = new VinoRepositorio();
             maridajeRepositorio = new MaridajeRepositorio();
@@ -136,6 +150,11 @@ namespace Bonvino.Controladores
             vinos.Clear();
             nombreVinos.Clear();
             añadaVinos.Clear();
+            precioARSVinos.Clear();
+            maridajeVinos.Clear();
+            varietalVinos.Clear();
+            tipoUvaVinos.Clear();
+            notaDeCataVinos.Clear();
             int i = 0;
             //var vinosBD = getVinosSinBD(); //Analisis
             var vinosBD = vinoRepositorio.ObtenerVinos(bodegaElegida, maridajeRepositorio,
@@ -144,17 +163,20 @@ namespace Bonvino.Controladores
             {
                 var vinoBuscado = determinarVinoAActualizar(infoVinoImportado, vinosBD);
                 if (vinoBuscado != null && (vinoBuscado.precioARS!=infoVinoImportado.precioARS ||
-                    vinoBuscado.notaDeCataBodega!=infoVinoImportado.notaDeCataBodega || 
-                    vinoBuscado.maridaje.nombre!=infoVinoImportado.maridaje || 
-                    vinoBuscado.varietal.porcentajeComposicion != infoVinoImportado.varietal.porcentajeComposicion ||
-                    vinoBuscado.varietal.descripcion != infoVinoImportado.varietal.descripcion ||
-                    vinoBuscado.varietal.tipoUva.nombre != infoVinoImportado.varietal.tipoUva.nombre
-                    ))
+                    vinoBuscado.notaDeCataBodega!=infoVinoImportado.notaDeCataBodega))
                 {
                     actualizarVinoExistente(infoVinoImportado, vinoBuscado);
-                    vinoRepositorio.ActualizarVino(vinoBuscado, varietalRepositorio);
+                    vinoRepositorio.ActualizarVino(vinoBuscado);
                     nombreVinos.Add(vinoBuscado.nombre);
                     añadaVinos.Add(vinoBuscado.añada);
+                    precioARSVinos.Add(vinoBuscado.precioARS);
+                    
+                    maridajeVinos.Add(vinoBuscado.maridaje.nombre);
+                    varietalVinos.Add(vinoBuscado.varietal.porcentajeComposicion);
+                    tipoUvaVinos.Add(vinoBuscado.varietal.tipoUva.nombre);
+
+                    notaDeCataVinos.Add(vinoBuscado.notaDeCataBodega);
+
                     vinos.Add(vinoBuscado);
                     i++;
                 }
@@ -163,6 +185,13 @@ namespace Bonvino.Controladores
                     vinos.Add(crearVino(infoVinoImportado));
                     nombreVinos.Add(vinos[i].nombre);
                     añadaVinos.Add(vinos[i].añada);
+                    precioARSVinos.Add(vinos[i].precioARS);
+
+                    maridajeVinos.Add(vinos[i].maridaje.nombre);
+                    varietalVinos.Add(vinos[i].varietal.porcentajeComposicion);
+                    tipoUvaVinos.Add(vinos[i].varietal.tipoUva.nombre);
+
+                    notaDeCataVinos.Add(vinos[i].notaDeCataBodega);
                     i++;
                 }
                 
@@ -236,7 +265,8 @@ namespace Bonvino.Controladores
         { 
             foreach (var usuario in usuarios)
             {
-                elementos[0].notificarNovedadVinoBodega(bodegaElegida.nombre, nombreVinos, añadaVinos, usuario);
+                elementos[0].notificarNovedadVinosBodega(bodegaElegida.nombre, nombreVinos, añadaVinos,precioARSVinos, maridajeVinos, 
+                    varietalVinos, tipoUvaVinos,notaDeCataVinos,usuario);
             }
 
         }

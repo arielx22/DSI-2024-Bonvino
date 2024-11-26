@@ -133,7 +133,29 @@ namespace Bonvino.Boundarys
                         }
                     }
                 });           
-            }      
+            }
+            if (bodegaElegida.nombre == "Weingut Dr. Loosen")
+            {
+                actualizaciones.Add(new VinoActualizacion
+                {
+                    nombre = "Norton Cabernet Sauvignon",
+                    añada = 2020,
+                    precioARS = 20000,
+                    maridaje = "Maridaje de Excelencia",
+                    notaDeCataBodega = "Aromas intensos a grosellas y cedro, con " +
+                    "taninos suaves y persistentes.",
+                    varietal = new VarietalActualizacion
+                    {
+                        descripcion = "Maridaje de Excelencia",
+                        porcentajeComposicion = 0.70f,
+                        tipoUva = new TipoUvaActualizacion()
+                        {
+                            nombre = "Cabernet Sauvignon"
+                        }
+                    }
+                });   
+            }
+
             return actualizaciones;
         }
 

@@ -11,7 +11,8 @@ namespace Bonvino.Clases.Interfaces
     {
         //void notificarNovedadVinoBodega(string bodega, string vino, int añada, float precioARS, string maridaje, string varietal, string tipoUva, string notaDeCata, string usuario);
         //void notificarNovedadVinoBodega(GestorActualizacionVino gestor);
-        void notificarNovedadVinoBodega(string bodega,List<string> vino, List<int> añada, string usuario);
+        void notificarNovedadVinosBodega(string bodega, List<string> vinos, List<int> añadas, List<float> preciosARS, List<string> maridajes,
+            List<float> varietales, List<string> tiposUva, List<string> noatasDeCata, string usuario);
     }
 
 }
